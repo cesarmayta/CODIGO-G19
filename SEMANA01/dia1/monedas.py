@@ -1,3 +1,4 @@
+import os
 opcion = 0
 valorCompra = 3.839
 valorVenta = 3.849
@@ -13,6 +14,7 @@ while(opcion != 3):
           """)
     print("="*60)
     opcion = int(input("Ingrese una opción del menú:"))
+    os.system("clear")
     if(opcion == 1):
         print("="*60)
         print("CONVERTIR DE SOLES A DOLARES")
@@ -33,5 +35,7 @@ while(opcion != 3):
         print("debe ingresar una opción valida ...")
         
     if(opcion == 1 or opcion == 2):
-        print("El monto en " + monedaDestino + " es " + str(montoDestino))
+        print("El monto en " + monedaDestino + " es " + str(round(montoDestino,2)))
+        input("PRESIONE ENTER PARA CONTINUAR..")
+        os.system("clear")
         
