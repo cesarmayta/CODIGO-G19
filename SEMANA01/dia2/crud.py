@@ -64,8 +64,8 @@ while(opcion != "5"):
             print("NO SE ENCONTRO EL ALUMNO SOLICITADO")
         else:
             print("""ALUMNO ENCONTRADO : 
-                  """ + listaAlumnos[posicionBusqueda].get("nombre") + """ -
-                  """ + listaAlumnos[posicionBusqueda].get("email") + """ - 
+                  """ + listaAlumnos[posicionBusqueda].get("nombre") + """ 
+                  """ + listaAlumnos[posicionBusqueda].get("email") + """ 
                   """ + listaAlumnos[posicionBusqueda].get("celular"))
             
             nombre = input('NUEVO NOMBRE: ')
@@ -82,6 +82,20 @@ while(opcion != "5"):
             
     elif(opcion == "4"):
         print("[4] ELIMINACIÓN DE ALUMNO")
+        valorBusqueda = input('INGRESE EL EMAIL DEL ALUMO A ACTUALIZAR : ')
+        posicionBusqueda = -1
+        for posicion in range(len(listaAlumnos)):
+            dicAlumno = listaAlumnos[posicion]
+            for clave,valor in dicAlumno.items():
+                if(clave == "email" and valor == valorBusqueda):
+                    posicionBusqueda = posicion
+                    break
+                
+        if (posicionBusqueda == -1):
+            print("NO SE ENCONTRO EL ALUMNO A ELIMINAR")
+        else:
+            listaAlumnos.pop(posicionBusqueda)
+            print("ALUMNO ELIMINADO !!!")
     elif(opcion == "5"):
         print("[5] ESTA SALIENDO DEL PROGRAMA")
     else:
