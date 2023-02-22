@@ -1,5 +1,6 @@
 import os
 import time
+from tabulate import tabulate
 """
 SISTEMA DE MATRICULA DE ALUMNOS
 C = CREATE | R = READ | U = UPDATE | D = DELETE
@@ -44,10 +45,14 @@ while(opcion != "5"):
         listaAlumnos.append(dicNuevoAlumno)
     elif(opcion == "2"):
         print("[2] RELACIÓN DE ALUMNOS")
-        for dicAlumno in listaAlumnos:
+        """for dicAlumno in listaAlumnos:
             print('*'*ANCHO)
             for clave,valor in dicAlumno.items():
-                print(clave + " : " + valor)
+                print(clave + " : " + valor)"""
+                
+        cabeceras = ["NOMBRE","EMAIL","CELULAR"]
+        tablaAlumnos = [alumno.values() for alumno in listaAlumnos]
+        print(tabulate(tablaAlumnos,headers=cabeceras,tablefmt="grid"))
         input("PRESIONE ENTER PARA CONTINUAR...")
     elif(opcion == "3"):
         print("[3] ACTUALIZACIÓN DE ALUMNO")
