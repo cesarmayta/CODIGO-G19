@@ -10,8 +10,8 @@ C = CREATE | R = READ | U = UPDATE | D = DELETE
     'email':'cesarmayta@gmail.com',
     'celular':'99332233'
 }"""
-alumno = {}
-listaAlumnos = [alumno]
+#alumno = {}
+listaAlumnos = []
 
 ANCHO = 50
 
