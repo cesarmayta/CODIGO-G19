@@ -13,15 +13,7 @@ f = open('alumnos.csv','r')
 strAlumnos = f.read()
 f.close()
 
-listaAlumnosCSV = strAlumnos.splitlines()
-for strAlumnoCSV in listaAlumnosCSV:
-    listaAlumnoInvidualCSV = strAlumnoCSV.split(';')
-    dictAlumnoCSV = {
-        'nombre':listaAlumnoInvidualCSV[0],
-        'email':listaAlumnoInvidualCSV[1],
-        'celular':listaAlumnoInvidualCSV[2]
-    }
-    listaAlumnos.append(dictAlumnoCSV)
+listaAlumnos = cargarDatos(strAlumnos,';',['nombre','email','celular'])
     
 ANCHO = 50
 
@@ -42,14 +34,7 @@ while(opcion != "5"):
     elif(opcion == "3"):
         print("[3] ACTUALIZACIÓN DE ALUMNO")
         valorBusqueda = input('INGRESE EL EMAIL DEL ALUMO A ACTUALIZAR : ')
-        posicionBusqueda = -1
-        for posicion in range(len(listaAlumnos)):
-            dicAlumno = listaAlumnos[posicion]
-            for clave,valor in dicAlumno.items():
-                if(clave == "email" and valor == valorBusqueda):
-                    posicionBusqueda = posicion
-                    break
-                
+        posicionBusqueda = buscarPosicionEnListado(valorBusqueda,listaAlumnos)
         if (posicionBusqueda == -1):
             print("NO SE ENCONTRO EL ALUMNO SOLICITADO")
         else:
@@ -67,20 +52,15 @@ while(opcion != "5"):
                 'email':email,
                 'celular':celular
             }
-            listaAlumnos[posicionBusqueda] = dicAlumnoEditar
+            #listaAlumnos[posicionBusqueda] = dicAlumnoEditar
+            listaAlumnos = actualizar(listAct=listaAlumnos,dicAct=dicAlumnoEditar,indexAct=posicionBusqueda)
             print('ALUMNO ACTUALIZADO !!!')
             
     elif(opcion == "4"):
         print("[4] ELIMINACIÓN DE ALUMNO")
         valorBusqueda = input('INGRESE EL EMAIL DEL ALUMO A ACTUALIZAR : ')
-        posicionBusqueda = -1
-        for posicion in range(len(listaAlumnos)):
-            dicAlumno = listaAlumnos[posicion]
-            for clave,valor in dicAlumno.items():
-                if(clave == "email" and valor == valorBusqueda):
-                    posicionBusqueda = posicion
-                    break
-                
+        posicionBusqueda = buscarPosicionEnListado(valorBusqueda,listaAlumnos)
+        
         if (posicionBusqueda == -1):
             print("NO SE ENCONTRO EL ALUMNO A ELIMINAR")
         else:
@@ -89,14 +69,7 @@ while(opcion != "5"):
     elif(opcion == "5"):
         print("[5] ESTA SALIENDO DEL PROGRAMA")
         #grabar los cambios de la lista de alumnos en el archivo csv
-        strAlumnos = ""
-        for dictAlumno in listaAlumnos:
-            for clave,valor in dictAlumno.items():
-                strAlumnos += valor
-                if clave != 'celular':
-                    strAlumnos += ';'
-                else:
-                    strAlumnos += '\n'
+        strAlumnos = grabarDatos(listaAlumnos,';','celular')
         #print(strAlumnos)
         fSalida = open('alumnos.csv','w')
         fSalida.write(strAlumnos)
