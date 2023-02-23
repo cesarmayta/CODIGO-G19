@@ -1,6 +1,8 @@
 import os
 import time
 from tabulate import tabulate
+from librerias.libAlumnos import *
+
 """
 SISTEMA DE MATRICULA DE ALUMNOS
 C = CREATE | R = READ | U = UPDATE | D = DELETE
@@ -26,41 +28,16 @@ ANCHO = 50
 opcion = "0"
 while(opcion != "5"):
     time.sleep(1)
-    print("="*ANCHO)
-    print("PROGRAMA PARA MATRICULA DE ALUMNOS")
-    print("="*ANCHO)
-    print("""
-          [1] REGISTRAR ALUMNO
-          [2] MOSTRAR ALUMNOS
-          [3] ACTUALIZAR ALUMNO
-          [4] ELIMINAR ALUMNO
-          [5] SALIR DEL PROGRAMA
-          """)
-    print("="*ANCHO)
+    mostrarMenu(ANCHO)
     
     opcion = input("INGRESE UNA OPCIÓN DEL MENU: ")
     os.system("clear")
     if(opcion == "1"):
         print("[1] REGISTRO DE NUEVO ALUMNO")
-        nombre = input("NOMBRE : ")
-        email = input("EMAIL : ")
-        celular = input("CELULAR : ")
-        dicNuevoAlumno = {
-            'nombre':nombre,
-            'email':email,
-            'celular':celular
-        }
-        listaAlumnos.append(dicNuevoAlumno)
-    elif(opcion == "2"):
-        print("[2] RELACIÓN DE ALUMNOS")
-        """for dicAlumno in listaAlumnos:
-            print('*'*ANCHO)
-            for clave,valor in dicAlumno.items():
-                print(clave + " : " + valor)"""
-                
+        listaAlumnos.append(insertarAlumno())
+    elif(opcion == "2"):        
         cabeceras = ["NOMBRE","EMAIL","CELULAR"]
-        tablaAlumnos = [alumno.values() for alumno in listaAlumnos]
-        print(tabulate(tablaAlumnos,headers=cabeceras,tablefmt="grid"))
+        mostrarListado(listaAlumnos,cabeceras)
         input("PRESIONE ENTER PARA CONTINUAR...")
     elif(opcion == "3"):
         print("[3] ACTUALIZACIÓN DE ALUMNO")
