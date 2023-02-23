@@ -5,14 +5,22 @@ from tabulate import tabulate
 SISTEMA DE MATRICULA DE ALUMNOS
 C = CREATE | R = READ | U = UPDATE | D = DELETE
 """
-"""alumno = {
-    'nombre':'César Mayta',
-    'email':'cesarmayta@gmail.com',
-    'celular':'99332233'
-}"""
-#alumno = {}
+#cargamos alumnos del archivo csv
 listaAlumnos = []
+f = open('alumnos.csv','r')
+strAlumnos = f.read()
+f.close()
 
+listaAlumnosCSV = strAlumnos.splitlines()
+for strAlumnoCSV in listaAlumnosCSV:
+    listaAlumnoInvidualCSV = strAlumnoCSV.split(';')
+    dictAlumnoCSV = {
+        'nombre':listaAlumnoInvidualCSV[0],
+        'email':listaAlumnoInvidualCSV[1],
+        'celular':listaAlumnoInvidualCSV[2]
+    }
+    listaAlumnos.append(dictAlumnoCSV)
+    
 ANCHO = 50
 
 opcion = "0"
@@ -103,5 +111,18 @@ while(opcion != "5"):
             print("ALUMNO ELIMINADO !!!")
     elif(opcion == "5"):
         print("[5] ESTA SALIENDO DEL PROGRAMA")
+        #grabar los cambios de la lista de alumnos en el archivo csv
+        strAlumnos = ""
+        for dictAlumno in listaAlumnos:
+            for clave,valor in dictAlumno.items():
+                strAlumnos += valor
+                if clave != 'celular':
+                    strAlumnos += ';'
+                else:
+                    strAlumnos += '\n'
+        #print(strAlumnos)
+        fSalida = open('alumnos.csv','w')
+        fSalida.write(strAlumnos)
+        fSalida.close()
     else:
         print("OPCION NO VALIDA!!!!")
