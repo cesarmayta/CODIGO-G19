@@ -15,7 +15,27 @@ c.execute("""
 
 
 def nuevo_alumno():
-    pass
+    def guardar():
+        pass
+    
+    
+    top = Toplevel()
+    top.title('Nuevo Alumno')
+    
+    lblNombre = Label(top,text='Nombre')
+    lblNombre.grid(row=0,column=0)
+    txtNombre = Entry(top,width=30)
+    txtNombre.grid(row=0,column=1)
+    
+    lblEmail = Label(top,text='Email')
+    lblEmail.grid(row=1,column=0)
+    txtEmail = Entry(top,width=30)
+    txtEmail.grid(row=1,column=1)
+    
+    btnGuardar = Button(top,text='Guardar',command=guardar)
+    btnGuardar.grid(row=3,column=1)
+        
+    top.mainloop()
 
 def eliminar_alumno():
     pass
