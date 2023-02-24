@@ -13,11 +13,20 @@ c.execute("""
           );
           """)
 
+def mostrar_alumnos():
+    listAlumnos = c.execute("select * from alumnos").fetchall()
+    
+    tree.delete(*tree.get_children())
+    for alumno in listAlumnos:
+        tree.insert('',END,alumno[0],values=(alumno[1],alumno[2]))
 
 def nuevo_alumno():
     def guardar():
-        pass
-    
+        c.execute("""
+                  insert into alumnos(nombre,email) values(?,?)
+                  """,(txtNombre.get(),txtEmail.get()))
+        conn.commit()
+        mostrar_alumnos()
     
     top = Toplevel()
     top.title('Nuevo Alumno')
@@ -59,4 +68,5 @@ tree.heading('Nombre',text='Nombre')
 tree.heading('Email',text='Email')
 tree.grid(column=0,row=1,columnspan=2)
 
+mostrar_alumnos()
 app.mainloop()
