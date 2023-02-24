@@ -47,7 +47,11 @@ def nuevo_alumno():
     top.mainloop()
 
 def eliminar_alumno():
-    pass
+    id = tree.selection()[0]
+    
+    c.execute("delete from alumnos where id = ?",(id,))
+    conn.commit()
+    mostrar_alumnos()
 
 app = Tk()
 app.title('Crud de Alumnos')
