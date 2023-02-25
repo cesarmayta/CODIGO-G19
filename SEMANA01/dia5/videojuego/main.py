@@ -42,9 +42,9 @@ class Paleta(pygame.sprite.Sprite):
         
     def update(self,evento):
         #buscar si se presionó la tecla de la flecha izquierda
-        if evento.key == pygame.K_LEFT:
+        if evento.key == pygame.K_LEFT and self.rect.left > 0:
             self.speed = [-5,0]
-        elif evento.key == pygame.K_RIGHT:
+        elif evento.key == pygame.K_RIGHT and self.rect.right < ANCHO:
             self.speed = [5,0]
         else:
             self.speed = [0,0]
