@@ -105,6 +105,24 @@ while True:
     #movemos la bolita
     bolita.update()
     
+    ############### COLISIONES #################
+    #Colisión entre bolita y jugador
+    if pygame.sprite.collide_rect(bolita,jugador):
+        bolita.speed[1] = -bolita.speed[1]
+        
+    #colisión de la bolita con el muro
+    lista = pygame.sprite.spritecollide(bolita,muro,False)
+    if lista:
+        ladrillo = lista[0]
+        cx = bolita.rect.centerx
+        if cx < ladrillo.rect.left or cx > ladrillo.rect.right:
+            bolita.speed[0] = -bolita.speed[0]
+        else:
+            bolita.speed[1] = -bolita.speed[1]
+        muro.remove(ladrillo)
+    
+    
+    
     #Pintamos la pantalla
     pantalla.fill(FONDO)
     #Dibujar la bolita en la pantalla
