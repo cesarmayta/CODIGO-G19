@@ -1,9 +1,12 @@
 import pygame
 import sys
+import time
 
 ANCHO = 640
 ALTO = 480
 FONDO = (0,0,64)
+
+pygame.init()
 
 #### CREAMOS OBJETOS DEL VIDEJUEGO
 class Bolita(pygame.sprite.Sprite):
@@ -21,7 +24,8 @@ class Bolita(pygame.sprite.Sprite):
         
     def update(self):
         #verificar si la bolita se sale de la pantalla
-        if self.rect.bottom >= ALTO or self.rect.top <= 0:
+        #if self.rect.bottom >= ALTO or self.rect.top <= 0:
+        if self.rect.top <= 0:
             self.speed[1] = -self.speed[1]
         elif self.rect.right >= ANCHO or self.rect.left <= 0:
             self.speed[0] = -self.speed[0]
@@ -77,6 +81,22 @@ class Muro(pygame.sprite.Group):
                 pos_y += ladrillo.rect.height
         
 
+############### FUNCIONES PARA ETAPAS DEL JUEGO
+
+def juego_terminado():
+    fuente = pygame.font.SysFont('Arial',72)
+    texto = fuente.render('GAME OVER',True,(255,255,255))
+    texto_rect = texto.get_rect()
+    texto_rect.center = [ANCHO / 2, ALTO / 2]
+    pantalla.blit(texto,texto_rect)
+    pygame.display.flip()
+    #pausar por 3 segundos
+    time.sleep(3)
+    
+    sys.exit()
+
+
+
 pantalla = pygame.display.set_mode((ANCHO,ALTO))
 
 pygame.display.set_caption('Juego en python de codigo g19')
@@ -121,6 +141,10 @@ while True:
             bolita.speed[1] = -bolita.speed[1]
         muro.remove(ladrillo)
     
+    
+    #revisar si la bolita sale de la pantalla
+    if bolita.rect.top > ALTO:
+        juego_terminado()
     
     
     #Pintamos la pantalla
