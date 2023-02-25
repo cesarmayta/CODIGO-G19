@@ -111,6 +111,10 @@ bolita = Bolita()
 jugador = Paleta()
 muro = Muro(50)
 
+#carga de sonidos del videojuego
+sonido_colision = pygame.mixer.Sound('sonidos/colision.ogg')
+sonido_colision_muro = pygame.mixer.Sound('sonidos/colision_muro.ogg')
+
 while True:
     #establacer el tiempo del reloj
     reloj.tick(60)
@@ -129,6 +133,7 @@ while True:
     #Colisión entre bolita y jugador
     if pygame.sprite.collide_rect(bolita,jugador):
         bolita.speed[1] = -bolita.speed[1]
+        pygame.mixer.Sound.play(sonido_colision)
         
     #colisión de la bolita con el muro
     lista = pygame.sprite.spritecollide(bolita,muro,False)
@@ -140,6 +145,7 @@ while True:
         else:
             bolita.speed[1] = -bolita.speed[1]
         muro.remove(ladrillo)
+        pygame.mixer.Sound.play(sonido_colision_muro)
     
     
     #revisar si la bolita sale de la pantalla
