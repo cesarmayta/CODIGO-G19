@@ -91,9 +91,17 @@ def juego_terminado():
     pantalla.blit(texto,texto_rect)
     pygame.display.flip()
     #pausar por 3 segundos
-    time.sleep(3)
+    pygame.mixer.Sound.play(sonido_game_over)
+    time.sleep(5)
     
     sys.exit()
+    
+def mostrar_puntuacion():
+    fuente = pygame.font.SysFont('Consolas',20)
+    texto = fuente.render(str(puntuacion).zfill(5),True,(255,255,255))
+    texto_rect = texto.get_rect()
+    texto_rect.topleft = [0,0]
+    pantalla.blit(texto,texto_rect)
 
 
 
@@ -111,9 +119,12 @@ bolita = Bolita()
 jugador = Paleta()
 muro = Muro(50)
 
+puntuacion = 0
+
 #carga de sonidos del videojuego
 sonido_colision = pygame.mixer.Sound('sonidos/colision.ogg')
 sonido_colision_muro = pygame.mixer.Sound('sonidos/colision_muro.ogg')
+sonido_game_over = pygame.mixer.Sound('sonidos/game_over.ogg')
 
 while True:
     #establacer el tiempo del reloj
@@ -146,6 +157,7 @@ while True:
             bolita.speed[1] = -bolita.speed[1]
         muro.remove(ladrillo)
         pygame.mixer.Sound.play(sonido_colision_muro)
+        puntuacion += 10
     
     
     #revisar si la bolita sale de la pantalla
@@ -155,6 +167,8 @@ while True:
     
     #Pintamos la pantalla
     pantalla.fill(FONDO)
+    #mostramos puntuación
+    mostrar_puntuacion()
     #Dibujar la bolita en la pantalla
     pantalla.blit(bolita.image,bolita.rect)
     #Dibujar al jugador en la pantalla
