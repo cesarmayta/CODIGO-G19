@@ -26,6 +26,30 @@ class Bolita(pygame.sprite.Sprite):
         elif self.rect.right >= ANCHO or self.rect.left <= 0:
             self.speed[0] = -self.speed[0]
         self.rect.move_ip(self.speed)
+        
+class Paleta(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        #cargar imagen
+        self.image = pygame.image.load('imagenes/paleta.png')
+        #obtenemos rectangulo
+        self.rect = self.image.get_rect()
+        
+        #posición inicial de la palet centraa solo en el eje x de la pantalla
+        self.rect.midbottom = (ANCHO /2,ALTO - 20)
+        #establecemos el speed inicial
+        self.speed = [0,0]
+        
+    def update(self,evento):
+        #buscar si se presionó la tecla de la flecha izquierda
+        if evento.key == pygame.K_LEFT:
+            self.speed = [-5,0]
+        elif evento.key == pygame.K_RIGHT:
+            self.speed = [5,0]
+        else:
+            self.speed = [0,0]
+            
+        self.rect.move_ip(self.speed)
 
 
 pantalla = pygame.display.set_mode((ANCHO,ALTO))
@@ -34,9 +58,12 @@ pygame.display.set_caption('Juego en python de codigo g19')
 
 #crear un reloj para hacer que la bolita se mueva mas lento
 reloj = pygame.time.Clock()
+#ajustar repetición de eventos de presion de tecla
+pygame.key.set_repeat(30)
 
 #CREAMOS LOS OBJETOS DEL VIDEOJUEGO
 bolita = Bolita()
+jugador = Paleta()
 
 while True:
     #establacer el tiempo del reloj
@@ -46,6 +73,8 @@ while True:
         if evento.type == pygame.QUIT:
             #cerrar videojuego
             sys.exit()
+        elif evento.type == pygame.KEYDOWN:
+            jugador.update(evento)
     
     #movemos la bolita
     bolita.update()
@@ -54,5 +83,7 @@ while True:
     pantalla.fill(FONDO)
     #Dibujar la bolita en la pantalla
     pantalla.blit(bolita.image,bolita.rect)
+    #Dibujar al jugador en la pantalla
+    pantalla.blit(jugador.image,jugador.rect)
     #actualizar los elementos en la pantalla
     pygame.display.flip()
