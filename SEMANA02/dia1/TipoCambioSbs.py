@@ -26,6 +26,18 @@ class TipoCambioSbs:
             
         return listaMonedas
     
+    def buscarTipoCambio(self,listaMonedas,valorBusqueda):
+        posicionBusqueda = -1
+        for contador in range(len(listaMonedas)):
+            dicMoneda = listaMonedas[contador]
+            for key,value in dicMoneda.items():
+                if key=='moneda' and value== valorBusqueda:
+                    posicionBusqueda = contador
+                    break
+                
+        dicResultado = listaMonedas[posicionBusqueda]
+        return dicResultado
+    
 #sbs = TipoCambioSbs()
 #print(sbs.obtenerTipoCambio())
         
