@@ -26,6 +26,6 @@ class TipoCambioSbs:
             
         return listaMonedas
     
-sbs = TipoCambioSbs()
-print(sbs.obtenerTipoCambio())
+#sbs = TipoCambioSbs()
+#print(sbs.obtenerTipoCambio())
         
