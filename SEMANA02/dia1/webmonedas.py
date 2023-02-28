@@ -19,7 +19,9 @@ def index():
     
     return httpResponse"""
     
-    return render_template('index.html')
+    strTitulo = "TIPO DE CAMBIO DE LA SBS"
+    
+    return render_template('index.html',titulo=strTitulo,monedas=listaMonedas)
     
     
 
