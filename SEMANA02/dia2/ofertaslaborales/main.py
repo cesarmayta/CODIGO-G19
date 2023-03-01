@@ -6,4 +6,9 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+@app.route('/detalle')
+def detalle():
+    return render_template('detalle.html')
+
 app.run(debug=True)
+
