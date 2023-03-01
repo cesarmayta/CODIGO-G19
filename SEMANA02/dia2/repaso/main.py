@@ -15,7 +15,14 @@ def saludo():
 
 @app.route('/peliculas')
 def peliculas():
+    categoria = request.args.get('cat','nn')
     listaPeliculas = ['Rapidos y furiosos 9','Lord of the Rings 1','Volver al futuro']
-    return render_template('peliculas.html',peliculas=listaPeliculas)
+    
+    context = {
+        "categoria":categoria,
+        "peliculas":listaPeliculas
+    }
+    
+    return render_template('peliculas.html',**context)
 
 app.run(debug=True)
