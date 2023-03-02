@@ -22,7 +22,7 @@ def index():
 @app.route('/portafolio')
 def portafolio():
     listaProyectos = fb.getCollection('proyectos')
-    
+    print(listaProyectos)
     context = {
         'proyectos':listaProyectos
     }
