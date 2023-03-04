@@ -22,17 +22,26 @@
             <table class="table">
                 <thead class="thead-dark">
                   <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Alumno</th>
-                    <th scope="col">HTML Y CSS</th>
+                    {% for curso in cursos %}
+                      <th scope="col">{{curso[1]}}</th>
+                    {% endfor %}
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                  </tr>
+                  
+                    {% for nota in notas %}
+                    <tr>
+                      <th scope="row">{{nota[0]}}</th>
+                      <td>{{nota[1]}}</td>
+                      <td>{{nota[2]}}</td>
+                      <td>{{nota[3]}}</td>
+                      <td>{{nota[4]}}</td>
+                      <td>{{nota[5]}}</td>
+                      <td>{{nota[6]}}</td>
+                    </tr>
+                    {% endfor %}
+                  
                 </tbody>
               </table>
               
