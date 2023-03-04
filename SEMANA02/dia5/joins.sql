@@ -49,3 +49,17 @@ LEFT JOIN alumno_curso n4 ON n4.alumno_id = a.id and n4.curso_id = 4
 LEFT JOIN alumno_curso n5 ON n5.alumno_id = a.id and n5.curso_id = 5
 LEFT JOIN alumno_curso n6 ON n6.alumno_id = a.id and n6.curso_id = 6
 GROUP BY a.nombre,n1.nota,n2.nota,n3.nota,n4.nota,n5.nota,n6.nota;
+-- TRAER UN REPORTE DE ASISTENCAS POR ALUMNO DE LOS PRIMEROS 3 DIAS DEL MES DE MARZO 
+-- DEBE TRAER LAS SIGUIENTES COLUMNAS
+-- ALUMNO | 01/03/2023 | 02/03/2023 | 03/03/2023
+-- CESAR  | 1          | 0          | 0
+--REVISAMOS EN 10 MIN 10:15 PM
+select a.nombre as alumno,
+COALESCE(f1.asistio,0) as '01/03/2023',
+COALESCE(f2.asistio,0) as '02/03/2023',
+COALESCE(f3.asistio,0) as '03/03/2023'
+FROM alumno a   
+LEFT JOIN asistencia f1 ON f1.alumno_id = a.id and f1.fecha_asistencia = '2023-03-01'
+LEFT JOIN asistencia f2 ON f2.alumno_id = a.id and f2.fecha_asistencia = '2023-03-02'
+LEFT JOIN asistencia f3 ON f3.alumno_id = a.id and f3.fecha_asistencia = '2023-03-03'
+limit 10;
