@@ -30,7 +30,16 @@ def categoria():
 
 @admin.route('/modalidad')
 def modalidad():
-    return render_template('admin/modalidad.html')
+    cursor = dbConn.cursor(dictionary=True)
+    sqlgetData = getSqlCatalogo('modalidad')
+    cursor.execute(sqlgetData)
+    data = cursor.fetchall()
+    cursor.close()
+    context = {
+        'modalidades':data
+    }
+    
+    return render_template('admin/modalidad.html',**context)
 
 @admin.route('/jornada')
 def jornada():
