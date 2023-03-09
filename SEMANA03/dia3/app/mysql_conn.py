@@ -19,8 +19,6 @@ class MysqlDb:
         
         if mysqlConn is None:
             print("Error en la conexión")
-        else:
-            print("conectado a bd")
             
         return mysqlConn
     
