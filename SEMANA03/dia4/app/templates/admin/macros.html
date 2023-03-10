@@ -1,25 +1,16 @@
 {% macro mostrar_tabla_catalogo(listaDatos) %}
-<table id="datatablesSimple">
+<table id="dataTable">
     <thead>
         <tr>
             <th>Id</th>
             <th>Decripción</th>
-            <th>Acciones</th>
         </tr>
     </thead>
-    <tfoot>
-        <tr>
-            <th>Id</th>
-            <th>Decripción</th>
-            <th>Acciones</th>
-        </tr>
-    </tfoot>
     <tbody>
         {% for dicDato in listaDatos %}
-        <tr>
+        <tr id="{{dicDato['id']}}">
             <td>{{dicDato['id']}}</td>
             <td>{{dicDato['descripcion']}}</td>
-            <td>...</td>
         </tr>
         {% endfor %}
     </tbody>
