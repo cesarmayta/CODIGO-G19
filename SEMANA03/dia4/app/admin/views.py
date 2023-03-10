@@ -70,7 +70,10 @@ def ajaxCategoria():
         
     elif(accion == "delete"):
         #eliminar
-        pass
+        cursor = dbConn.cursor()
+        cursor.execute("delete from tbl_categoria where categoria_id = '"+id+"'")
+        dbConn.commit()
+        cursor.close()
     
     context = {
         'status':True

@@ -60,6 +60,13 @@
                     class:'btn btn-success',
                     html:'Confirmar'
                 }
+            },
+            onAjax: function(action,serialize){
+                console.log("respuesta del servidor");
+                console.log(action)
+                if(action === "delete"){
+                    location.reload();
+                }
             }
         })
     })
