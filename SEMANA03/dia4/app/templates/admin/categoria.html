@@ -25,3 +25,13 @@
     </div>
 </div>
 {% endblock %}
+{% block scripts %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+<script src="{{url_for('static',filename='plugins/jquery/jquery.min.js')}}"></script>
+<script src="{{url_for('static',filename='plugins/jquery-tabledit-1.2.3/jquery.tabledit.js')}}"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        console.log("ejecutando jquery...")
+    })
+</script>
+{% endblock %}
