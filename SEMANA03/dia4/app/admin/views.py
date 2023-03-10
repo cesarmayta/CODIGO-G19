@@ -6,7 +6,7 @@ from . import admin
 from app import dbConn
 
 #importamos formularios
-from .forms import CatalogoForm
+from .forms import CatalogoForm,EmpresaForm
 
 def getSqlCatalogo(tblCatalogo):
     strSqlCatalogo = "select " + tblCatalogo + "_id as id," + tblCatalogo + "_descripcion as descripcion from tbl_" + tblCatalogo
@@ -54,14 +54,26 @@ def categoria():
     }
     return render_template('admin/categoria.html',**context)
 
-@admin.route('/modalidad')
+@admin.route('/modalidad',methods=['GET','POST'])
 def modalidad():
+    
+    modalidadForm = CatalogoForm()
+    
+    if(modalidadForm.validate_on_submit()):
+        descripcion = modalidadForm.descripcion.data
+        cursorInsert = dbConn.cursor()
+        strSqlInsert = setSqlCatalogo('modalidad',descripcion)
+        cursorInsert.execute(strSqlInsert)
+        dbConn.commit()
+        cursorInsert.close()
+    
     cursor = dbConn.cursor(dictionary=True)
     sqlgetData = getSqlCatalogo('modalidad')
     cursor.execute(sqlgetData)
     data = cursor.fetchall()
     cursor.close()
     context = {
+        'form':modalidadForm,
         'modalidades':data
     }
     
@@ -81,9 +93,31 @@ def jornada():
     }
     return render_template('admin/jornada.html',**context)
 
-@admin.route('/empresa')
+@admin.route('/empresa',methods=['GET','POST'])
 def empresa():
-    return render_template('admin/empresa.html')
+    empresaForm = EmpresaForm()
+    
+    if empresaForm.validate_on_submit():
+        nombre = empresaForm.nombre.data
+        descripcion = empresaForm.descripcion.data
+        logo = empresaForm.logo.data
+        beneficios = empresaForm.logo.data
+        strSqlInsert = """
+                       insert into tbl_empresa(empresa_nombre,empresa_descripcion,empresa_logo) 
+                       values('"""+nombre+"""','"""+descripcion+"""',
+                       '"""+logo+"""');
+                       """
+        cursorInsert = dbConn.cursor()
+        cursorInsert.execute(strSqlInsert)
+        dbConn.commit()
+        
+        cursorInsert.close()
+        
+        
+    context = {
+        'form':empresaForm
+    }
+    return render_template('admin/empresa.html',**context)
 
 @admin.route('/oferta')
 def oferta():
