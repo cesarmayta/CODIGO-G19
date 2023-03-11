@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,jsonify
+from flask import Flask,render_template,request,jsonify,redirect,url_for
 
 from . import admin
 
@@ -6,7 +6,7 @@ from . import admin
 from app import dbConn
 
 #importamos formularios
-from .forms import CatalogoForm,EmpresaForm
+from .forms import CatalogoForm,EmpresaForm,OfertaForm
 
 def getSqlCatalogo(tblCatalogo):
     strSqlCatalogo = "select " + tblCatalogo + "_id as id," + tblCatalogo + "_descripcion as descripcion from tbl_" + tblCatalogo
@@ -147,6 +147,45 @@ def empresa():
     }
     return render_template('admin/empresa.html',**context)
 
+############################# RUTAS PARA OFERTAS LABORALES ###################
 @admin.route('/oferta')
 def oferta():
     return render_template('admin/oferta.html')
+
+@admin.route('/nuevaoferta',methods=['GET','POST'])
+def nuevaOferta():
+    
+    oferta_form = OfertaForm()
+    
+    if oferta_form.validate_on_submit():
+        titulo = oferta_form.titulo.data
+        descripcion = oferta_form.descripcion.data
+        requerimientos = oferta_form.requerimientos.data
+        salario = oferta_form.salario.data
+        url = oferta_form.url.data
+        empresa = oferta_form.empresa.data
+        categoria = oferta_form.categoria.data
+        experiencia = oferta_form.experiencia.data
+        jornada = oferta_form.jornada.data
+        modalidad = oferta_form.modalidad.data
+        
+        strSqlInsert = """insert into tbl_oferta
+                          (oferta_titulo,oferta_fregistro,oferta_descripcion,oferta_requerimientos,
+                          oferta_salario,oferta_url,empresa_id,categoria_id,experiencia_id,jornada_id,modalidad_id)
+                          values ('"""+titulo+"""',CURRENT_DATE(),'"""+descripcion+"""','"""+requerimientos+"""',
+                          '"""+str(salario)+"""','"""+url+"""','"""+empresa+"""','"""+categoria+"""','"""+experiencia+"""',
+                          '"""+jornada+"""','"""+modalidad+"""');
+                       """
+        print(strSqlInsert)
+        cursorInsert = dbConn.cursor()
+        cursorInsert.execute(strSqlInsert)
+        dbConn.commit()
+        cursorInsert.close()
+        
+        return redirect(url_for('admin.oferta'))
+        
+    context = {
+        'form':oferta_form
+    }
+    
+    return render_template('admin/nuevaoferta.html',**context)
