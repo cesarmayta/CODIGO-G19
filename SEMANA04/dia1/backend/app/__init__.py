@@ -1,5 +1,5 @@
 from flask import Flask
-from .models import Categoria,Nivel
+from .models import Categoria,Nivel,Autor,Curso
 
 from .config import Config
 
