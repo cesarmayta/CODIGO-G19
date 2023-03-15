@@ -13,5 +13,14 @@ class IndexResource(Resource):
         }
         
         return context
+    
+    def post(self):
+        pass
+    
+    def put(self):
+        pass
+        
+    def delete(self):
+        pass
 
 api.add_resource(IndexResource,'/')
