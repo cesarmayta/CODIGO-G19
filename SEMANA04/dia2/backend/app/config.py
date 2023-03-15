@@ -1,3 +1,8 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 class Config:
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:@localhost:3306/db_perudemy_g19'
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI')
     SQLALCHEMY_TRACK_MODIFICATIONS=False
