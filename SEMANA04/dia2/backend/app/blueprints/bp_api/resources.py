@@ -81,6 +81,7 @@ class CategoriaResource(Resource):
 class CatIdResource(Resource):
     
     def get(self,id):
+        
         data = Categoria.get_by_id(id)
         data_schema = CategoriaSchema()
         
@@ -94,4 +95,4 @@ class CatIdResource(Resource):
 api.add_resource(IndexResource,'/')
 api.add_resource(CategoriaResource,'/categoria')
 api.add_resource(CategoriaResource,'/categoria/<id>',endpoint='categoria')
-api.add_resource(CategoriaResource,'/catbyid/<id>',endpoint='catbyid')
+api.add_resource(CatIdResource,'/catbyid/<id>')
