@@ -12,3 +12,7 @@ class NivelSchema(ma.Schema):
 class AutorSchema(ma.Schema):
     class Meta:
         fields = ('autor_id','autor_nombre','autor_foto','autor_descripcion')
+        
+class CursoSchema(ma.Schema):
+    class Meta:
+        fields = ('curso_id','curso_titulo','curso_descripcion','curso_fecharegistro','categoria_id','nivel_id','autor_id')
