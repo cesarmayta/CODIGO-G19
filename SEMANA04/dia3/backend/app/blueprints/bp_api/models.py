@@ -62,8 +62,28 @@ class Autor(db.Model):
     autor_foto = db.Column(db.String(200),nullable=True)
     autor_descripcion = db.Column(db.Text)
     
-    def __init__(self,nombre):
+    def __init__(self,nombre,foto,descripcion):
         self.autor_nombre = nombre
+        self.autor_foto = foto
+        self.autor_descripcion = descripcion
+        
+    @staticmethod
+    def get_all():
+        return Autor.query.all()
+    
+    @staticmethod
+    def get_by_id(id):
+        return Autor.query.get(id)
+    
+    def save(self):
+        if not self.autor_id:
+            db.session.add(self)
+        db.session.commit()
+        
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+        
         
 class Curso(db.Model):
     __tablename__ =  "tbl_curso"
