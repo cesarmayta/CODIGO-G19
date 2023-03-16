@@ -41,6 +41,49 @@ class CursoResource(Resource):
         
         return context
     
+    def put(self,id):
+        data = request.get_json()
+        titulo = data['titulo']
+        descripcion = data['descripcion']
+        nivelId = data['nivel_id']
+        categoriaId = data['categoria_id']
+        autorId = data['autor_id']
+        
+        objCurso = Curso.get_by_id(id)
+        objCurso.curso_titulo = titulo
+        objCurso.curso_descripcion = descripcion
+        objCurso.nivel_id = nivelId
+        objCurso.categoria_id = categoriaId
+        objCurso.autor_id = autorId
+        objCurso.save()
+        
+        data_schema = CursoSchema()
+        
+        context = {
+            'status':True,
+            'content':data_schema.dump(objCurso)
+        }
+        
+        return context
+    
+    def delete(self,id):
+        
+        
+        
+        objCurso = Curso.get_by_id(id)
+        objCurso.delete()
+        
+        data_schema = CursoSchema()
+        
+        context = {
+            'status':True,
+            'content':data_schema.dump(objCurso)
+        }
+        
+        return context
+        
+        
+    
     
     
 class CursoIdResource(Resource):
@@ -59,6 +102,6 @@ class CursoIdResource(Resource):
     
     
 api.add_resource(CursoResource,'/curso')
-#api.add_resource(AutorResource,'/autor/<id>',endpoint='autor')
+api.add_resource(CursoResource,'/curso/<id>',endpoint='curso')
 api.add_resource(CursoIdResource,'/cursoid/<id>',endpoint='cursoid')
         
