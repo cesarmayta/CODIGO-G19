@@ -1,5 +1,6 @@
 #create your models
 from utils.db import db
+import datetime
 
 class Categoria(db.Model):
     __tablename__ = "tbl_categoria"
@@ -91,10 +92,32 @@ class Curso(db.Model):
     curso_id = db.Column(db.Integer,primary_key=True)
     curso_titulo = db.Column(db.String(200),nullable=False)
     curso_descripcion = db.Column(db.Text)
-    curso_fecharegistro = db.Column(db.Date,nullable=False)
+    curso_fecharegistro = db.Column(db.DateTime,nullable=False,default=datetime.datetime.now,onupdate=datetime.datetime.now)
     categoria_id = db.Column(db.Integer,db.ForeignKey("tbl_categoria.categoria_id"))
     nivel_id = db.Column(db.Integer,db.ForeignKey("tbl_nivel.nivel_id"))
     autor_id = db.Column(db.Integer,db.ForeignKey("tbl_autor.autor_id"))
     
-    def __init__(self,titulo):
+    def __init__(self,titulo,descripcion,categoriaId,nivelId,autorId):
         self.curso_titulo = titulo
+        self.curso_descripcion = descripcion
+        self.categoria_id = categoriaId
+        self.nivel_id = nivelId
+        self.autor_id = autorId
+        
+    @staticmethod
+    def get_all():
+        return Curso.query.all()
+    
+    @staticmethod
+    def get_by_id(id):
+        return Curso.query.get(id)
+    
+    def save(self):
+        if not self.curso_id:
+            db.session.add(self)
+        db.session.commit()
+        
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+        
