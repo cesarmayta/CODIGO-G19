@@ -15,4 +15,7 @@ class AutorSchema(ma.Schema):
         
 class CursoSchema(ma.Schema):
     class Meta:
-        fields = ('curso_id','curso_titulo','curso_descripcion','curso_fecharegistro','categoria_id','nivel_id','autor_id')
+        fields = ('curso_id','curso_titulo','curso_descripcion',
+                  'curso_fecharegistro',
+                  'categoria_id','nivel_id','autor_id',
+                  'curso_imagen','curso_duracion','curso_precio','curso_clases')

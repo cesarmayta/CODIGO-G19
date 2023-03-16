@@ -48,6 +48,10 @@ class CursoResource(Resource):
         nivelId = data['nivel_id']
         categoriaId = data['categoria_id']
         autorId = data['autor_id']
+        duracion = data['duracion']
+        precio = data['precio']
+        imagen = data['imagen']
+        clases = data['clases']
         
         objCurso = Curso.get_by_id(id)
         objCurso.curso_titulo = titulo
@@ -55,6 +59,10 @@ class CursoResource(Resource):
         objCurso.nivel_id = nivelId
         objCurso.categoria_id = categoriaId
         objCurso.autor_id = autorId
+        objCurso.curso_imagen = imagen
+        objCurso.curso_precio = precio
+        objCurso.curso_duracion = duracion
+        objCurso.curso_clases = clases
         objCurso.save()
         
         data_schema = CursoSchema()
