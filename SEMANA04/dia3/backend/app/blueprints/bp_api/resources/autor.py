@@ -20,6 +20,7 @@ class AutorResource(Resource):
         
         return context
     
+    
     def post(self):
         data = request.get_json()
         nombre = data['nombre']
