@@ -7,6 +7,7 @@ class Categoria(db.Model):
     
     categoria_id = db.Column(db.Integer,primary_key=True)
     categoria_descripcion = db.Column(db.String(100),nullable=False)
+    cursos = db.relationship('Curso',backref='cat',lazy=True)
     
     def __init__(self,descripcion):
         self.categoria_descripcion = descripcion
