@@ -10,7 +10,8 @@ const CoursesList = ({ category, filters, isValid }) => {
   const [coursesFiltered, setCoursesFiltered] = useState([]);
   const getCourses = async () => {
     const response = await fetch(
-      `https://apimocha.com/education-platform/courses/${category}`
+      'http://localhost:5000/curso'
+      //`https://apimocha.com/education-platform/courses/${category}`
     );
     const data = await response.json();
     setCourses(data);

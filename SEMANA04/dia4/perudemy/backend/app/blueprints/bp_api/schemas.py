@@ -1,5 +1,6 @@
 #create your schemas
 from utils.db import ma
+from marshmallow import fields
 
 class CategoriaSchema(ma.Schema):
     class Meta:
@@ -14,8 +15,20 @@ class AutorSchema(ma.Schema):
         fields = ('autor_id','autor_nombre','autor_foto','autor_descripcion')
         
 class CursoSchema(ma.Schema):
+    id = fields.Integer(attribute="curso_id")
+    category = fields.String(attribute="cat.categoria_descripcion")
+    title = fields.String(attribute="curso_titulo")
+    description = fields.String(attribute="curso_descripcion")
+    level = fields.String(attribute="niv.nivel_descripcion")
+    teacher = fields.String(attribute="aut.autor_nombre")
+    duration = fields.Integer(attribute="curso_duracion")
+    lectures = fields.Integer(attribute="curso_clases")
+    stars = fields.Integer(attribute="curso_calificacion")
+    price = fields.Integer(attribute="curso_precio")
+    img = fields.String(attribute="curso_imagen")
     class Meta:
-        fields = ('curso_id','curso_titulo','curso_descripcion',
-                  'curso_fecharegistro',
-                  'categoria_id','nivel_id','autor_id',
-                  'curso_imagen','curso_duracion','curso_precio','curso_clases','cat.categoria_descripcion')
+        fields = ('id','category','title',
+                  'description',
+                  'level','teacher','duration',
+                  'lectures','stars','price','banner',
+                  'img')

@@ -35,6 +35,7 @@ class Nivel(db.Model):
     
     nivel_id = db.Column(db.Integer,primary_key=True)
     nivel_descripcion = db.Column(db.String(100),nullable=False)
+    cursos = db.relationship('Curso',backref='niv',lazy=True)
     
     def __init__(self,descripcion):
         self.nivel_descripcion = descripcion
@@ -63,6 +64,7 @@ class Autor(db.Model):
     autor_nombre = db.Column(db.String(200),nullable=False)
     autor_foto = db.Column(db.String(200),nullable=True)
     autor_descripcion = db.Column(db.Text)
+    cursos = db.relationship('Curso',backref='aut',lazy=True)
     
     def __init__(self,nombre,foto,descripcion):
         self.autor_nombre = nombre
@@ -98,6 +100,7 @@ class Curso(db.Model):
     curso_duracion = db.Column(db.Integer,default=60)
     curso_clases = db.Column(db.Integer,default=20)
     curso_precio = db.Column(db.Integer,default=0)
+    curso_calificacion = db.Column(db.Integer,default=0)
     categoria_id = db.Column(db.Integer,db.ForeignKey("tbl_categoria.categoria_id"))
     nivel_id = db.Column(db.Integer,db.ForeignKey("tbl_nivel.nivel_id"))
     autor_id = db.Column(db.Integer,db.ForeignKey("tbl_autor.autor_id"))

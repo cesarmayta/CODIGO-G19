@@ -18,7 +18,7 @@ class CursoResource(Resource):
             'content':data_schema.dump(data)
         }
         
-        return context
+        return data_schema.dump(data)
     
     
     def post(self):
