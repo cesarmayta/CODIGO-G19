@@ -104,6 +104,7 @@ class Curso(db.Model):
     categoria_id = db.Column(db.Integer,db.ForeignKey("tbl_categoria.categoria_id"))
     nivel_id = db.Column(db.Integer,db.ForeignKey("tbl_nivel.nivel_id"))
     autor_id = db.Column(db.Integer,db.ForeignKey("tbl_autor.autor_id"))
+    topicos = db.relationship('CursoTopico',backref='cur',lazy=True)
     
     def __init__(self,titulo,descripcion,categoriaId,nivelId,autorId):
         self.curso_titulo = titulo
@@ -128,4 +129,67 @@ class Curso(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+        
+class CursoTopico(db.Model):
+    __tablename__ =  "tbl_curso_topico"
+    
+    curtop_id = db.Column(db.Integer,primary_key=True)
+    curtop_descripcion = db.Column(db.String(200),nullable=False)
+    curso_id = db.Column(db.Integer,db.ForeignKey("tbl_curso.curso_id"))
+    clases = db.relationship('CursoTopicoClase',backref='topi',lazy=True)
+    
+    def __init__(self,descripcion,cursoId):
+        self.curtop_descripcion = descripcion
+        self.curso_id = cursoId
+        
+    @staticmethod
+    def get_all():
+        return CursoTopico.query.all()
+    
+    @staticmethod
+    def get_by_id(id):
+        return CursoTopico.query.get(id)
+    
+    def save(self):
+        if not self.curtop_id:
+            db.session.add(self)
+        db.session.commit()
+        
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+        
+class CursoTopicoClase(db.Model):
+    __tablename__ =  "tbl_curso_topico_clase"
+    
+    curtopcla_id = db.Column(db.Integer,primary_key=True)
+    curtopcla_descripcion = db.Column(db.String(200),nullable=False)
+    curtopcla_duracion = db.Column(db.Integer,default=0)
+    curtop_id = db.Column(db.Integer,db.ForeignKey("tbl_curso_topico.curtop_id"))
+    
+    def __init__(self,descripcion,duracion,topicoId):
+        self.curtopcla_descripcion = descripcion
+        self.curtopcla_duracion = duracion
+        self.curtop_id = topicoId
+        
+    @staticmethod
+    def get_all():
+        return CursoTopico.query.all()
+    
+    @staticmethod
+    def get_by_id(id):
+        return CursoTopico.query.get(id)
+    
+    def save(self):
+        if not self.curtop_id:
+            db.session.add(self)
+        db.session.commit()
+        
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+        
+
+
+
         
