@@ -16,6 +16,7 @@ class UsuarioResource(Resource):
     
     @jwt_required()
     def get(self):
+        
         context = {
             'status':True,
             'conent':'auth service'
@@ -45,10 +46,18 @@ class LoginResource(Resource):
         password = request.json.get("password",None)
         
         payload = {
-            'usuario':username
+            'username':username
         }
         
-        if username == "admin" and password == "admin":
+        objUsuario = Usuario.query.filter_by(usuario_nombre=username)
+        #print(objUsuario)
+        #print(objUsuario[0].usuario_id)
+
+        if check_password_hash(objUsuario[0].usuario_password, password):
+            payload = {
+                'id':objUsuario[0].usuario_id,
+                'username':username
+            }
             access_token = create_access_token(payload)
         else:
             access_token = 'credenciales no validas'
