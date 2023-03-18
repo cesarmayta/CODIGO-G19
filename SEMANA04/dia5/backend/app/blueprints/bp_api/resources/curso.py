@@ -5,10 +5,13 @@ from .. import bp_api
 from ..models import Curso
 from ..schemas import CursoSchema
 
+from flask_jwt_extended import jwt_required
+
 api = Api(bp_api)
 
 class CursoResource(Resource):
     
+    @jwt_required()
     def get(self):
         data = Curso.get_all()
         data_schema = CursoSchema(many=True)

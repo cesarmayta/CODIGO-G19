@@ -29,7 +29,7 @@ class UsuarioResource(Resource):
         return context
     
     def post(self):
-        username = request.json.get("username",None)
+        username = request.json.get("email",None)
         password = request.json.get("password",None)
         
         objUsuario = Usuario(username,generate_password_hash(password))
@@ -48,7 +48,7 @@ class UsuarioResource(Resource):
     def put(self,id):
         data = request.get_json()
         objUsuario = Usuario.get_by_id(id)
-        objUsuario.usuario_nombre = data['username']
+        objUsuario.usuario_nombre = data['email']
         objUsuario.usuario_password = generate_password_hash(data['password'])
         objUsuario.save()
         
@@ -89,11 +89,11 @@ class UsuarioIdResource(Resource):
     
 class LoginResource(Resource):    
     def post(self):
-        username = request.json.get("username",None)
+        username = request.json.get("email",None)
         password = request.json.get("password",None)
         
         payload = {
-            'username':username
+            'email':username
         }
         
         objUsuario = Usuario.query.filter_by(usuario_nombre=username)
@@ -103,7 +103,7 @@ class LoginResource(Resource):
         if check_password_hash(objUsuario[0].usuario_password, password):
             payload = {
                 'id':objUsuario[0].usuario_id,
-                'username':username
+                'email':username
             }
             access_token = create_access_token(payload)
         else:
