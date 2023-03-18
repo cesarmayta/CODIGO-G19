@@ -17,9 +17,13 @@ class UsuarioResource(Resource):
     @jwt_required()
     def get(self):
         
+        data = Usuario.get_all()
+        
+        data_schema = UsuarioSchema(many=True)
+        
         context = {
             'status':True,
-            'conent':'auth service'
+            'conent': data_schema.dump(data)
         }
         
         return context
@@ -39,7 +43,50 @@ class UsuarioResource(Resource):
         }
         
         return context
+    
+    @jwt_required()
+    def put(self,id):
+        data = request.get_json()
+        objUsuario = Usuario.get_by_id(id)
+        objUsuario.usuario_nombre = data['username']
+        objUsuario.usuario_password = generate_password_hash(data['password'])
+        objUsuario.save()
+        
+        data_schema = UsuarioSchema()
+        context = {
+            'status':True,
+            'content':data_schema.dump(objUsuario)
+        }
+        
+        return context
+    
+    @jwt_required()
+    def delete(self,id):
+        objUsuario = Usuario.get_by_id(id)
+        objUsuario.delete()
+        
+        data_schema = UsuarioSchema()
+        context = {
+            'status':True,
+            'content':data_schema.dump(objUsuario)
+        }
+        
+        return context
+    
+class UsuarioIdResource(Resource):
+    @jwt_required()
+    def get(self,id):
+        
+        data = Usuario.get_by_id(id)
+        data_schema = UsuarioSchema()
+        
+        context = {
+            'status':True,
+            'content':data_schema.dump(data)
+        }
 
+        return context
+    
 class LoginResource(Resource):    
     def post(self):
         username = request.json.get("username",None)
@@ -70,4 +117,6 @@ class LoginResource(Resource):
         return context
 
 api.add_resource(UsuarioResource,'/usuario')
+api.add_resource(UsuarioResource,'/usuario/<id>',endpoint='usuario')
+api.add_resource(UsuarioIdResource,'/usuarioid/<id>',endpoint='usuarioid')
 api.add_resource(LoginResource,'/login')
