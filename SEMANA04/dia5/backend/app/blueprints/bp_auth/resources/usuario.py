@@ -5,8 +5,12 @@ from .. import bp_auth
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required
 
-api = Api(bp_auth)
+from ..models import Usuario
+from ..schemas import UsuarioSchema
 
+from werkzeug.security import generate_password_hash, check_password_hash
+
+api = Api(bp_auth)
 
 class UsuarioResource(Resource):
     
@@ -19,6 +23,23 @@ class UsuarioResource(Resource):
         
         return context
     
+    def post(self):
+        username = request.json.get("username",None)
+        password = request.json.get("password",None)
+        
+        objUsuario = Usuario(username,generate_password_hash(password))
+        objUsuario.save()
+        
+        data_schema = UsuarioSchema()
+            
+        context = {
+            'status':True,
+            'content':data_schema.dump(objUsuario)
+        }
+        
+        return context
+
+class LoginResource(Resource):    
     def post(self):
         username = request.json.get("username",None)
         password = request.json.get("password",None)
@@ -39,4 +60,5 @@ class UsuarioResource(Resource):
         
         return context
 
-api.add_resource(UsuarioResource,'/')
+api.add_resource(UsuarioResource,'/usuario')
+api.add_resource(LoginResource,'/login')
