@@ -3,11 +3,14 @@ from flask import request
 from .. import bp_auth
 
 from flask_jwt_extended import create_access_token
+from flask_jwt_extended import jwt_required
+
 api = Api(bp_auth)
 
 
 class UsuarioResource(Resource):
     
+    @jwt_required()
     def get(self):
         context = {
             'status':True,
