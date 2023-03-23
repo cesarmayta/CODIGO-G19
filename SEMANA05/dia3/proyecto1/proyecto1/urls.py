@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from django.http import HttpResponse
 
+from peliculas import views as views_peliculas
+
 def saludo(request):
     nombre = request.GET['nombre']
     return HttpResponse('<h1><center> HOLA MUNDO '+ nombre +' </center></h1')
@@ -43,5 +45,6 @@ urlpatterns = [
     path('saludo',saludo),
     path('suma/<int:n1>/<int:n2>',suma),
     path('calculadora/<int:n1>/<int:n2>/<str:ope>',calculadora),
+    path('peliculas',views_peliculas.index),
     path('admin/', admin.site.urls),
 ]
