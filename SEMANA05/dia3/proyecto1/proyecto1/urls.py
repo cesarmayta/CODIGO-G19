@@ -14,10 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from django.http import HttpResponse
-
-from peliculas import views as views_peliculas
 
 def saludo(request):
     nombre = request.GET['nombre']
@@ -45,6 +43,6 @@ urlpatterns = [
     path('saludo',saludo),
     path('suma/<int:n1>/<int:n2>',suma),
     path('calculadora/<int:n1>/<int:n2>/<str:ope>',calculadora),
-    path('peliculas',views_peliculas.index),
+    path('peliculas/',include('peliculas.urls')),
     path('admin/', admin.site.urls),
 ]
