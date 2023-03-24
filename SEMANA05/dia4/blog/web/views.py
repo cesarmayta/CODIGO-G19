@@ -13,3 +13,12 @@ def index(request):
     }
     
     return render(request,'index.html',context)
+
+def articulo(request,articulo_id):
+    objArticulo = Articulo.objects.get(pk=articulo_id)
+    
+    context= {
+        'articulo':objArticulo
+    }
+    
+    return render(request,'articulo.html',context)

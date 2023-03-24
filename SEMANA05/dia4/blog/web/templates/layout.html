@@ -8,7 +8,9 @@
         <!-- Navigation-->
         {% include 'includes/navbar.html' %}
         <!-- Page Header-->
-        {% include 'includes/header.html' %}
+        {% block header %}
+            {% include 'includes/header.html' %}
+        {% endblock %}
         <!-- Main Content-->
         <div class="container px-4 px-lg-5">
             {% block content %}
