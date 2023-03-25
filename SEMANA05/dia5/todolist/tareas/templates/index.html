@@ -44,7 +44,6 @@
             <table class="table mb-4">
               <thead>
                 <tr>
-                  <th scope="col">No.</th>
                   <th scope="col">Tarea</th>
                   <th scope="col">Estado</th>
                   <th scope="col">Acciones</th>
@@ -53,12 +52,11 @@
               <tbody>
                 {% for tarea in tareas %}
                 <tr>
-                  <th scope="row">{{tarea.id}}</th>
                   <td>{{tarea.descripcion}}</td>
                   <td>{{tarea.estado}}</td>
                   <td>
-                    <button type="submit" class="btn btn-danger">Eliminar</button>
-                    <button type="submit" class="btn btn-success ms-1">Completar</button>
+                    <a href="/eliminar/{{tarea.id}}" class="btn btn-danger">Eliminar</a>
+                    <a href="/completar/{{tarea.id}}" class="btn btn-success ms-1">Completar</a>
                   </td>
                 </tr>
                 {% endfor %}
