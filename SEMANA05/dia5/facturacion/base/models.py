@@ -27,9 +27,9 @@ class Cliente(models.Model):
 
 class Producto(models.Model):
     producto_id = models.AutoField(primary_key=True)
-    producto_codigo = models.CharField(max_length=255)
-    producto_descripcion = models.CharField(max_length=255)
-    producto_precio = models.FloatField()
+    producto_codigo = models.CharField(max_length=255,verbose_name='CODIGO')
+    producto_descripcion = models.CharField(max_length=255,verbose_name='PRODUCTO')
+    producto_precio = models.FloatField(verbose_name='PRECIO')
     producto_estado = models.CharField(max_length=1)
     producto_fecha_log = models.DateTimeField()
     producto_usuario_log = models.CharField(max_length=255)
