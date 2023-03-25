@@ -9,11 +9,21 @@ from django.db import models
 
 
 class Cliente(models.Model):
+    ESTADO_ACTIVO = 'A'
+    ESTADO_INACTIVO = 'I'
+    ESTADO_CLIENTE = (
+        (ESTADO_ACTIVO,'Activo'),
+        (ESTADO_INACTIVO,'Inactivo')
+    )
     cliente_id = models.AutoField(primary_key=True)
-    cliente_rsocial = models.CharField(max_length=255)
-    cliente_ruc = models.CharField(max_length=20)
-    cliente_direccion = models.TextField()
-    cliente_estado = models.CharField(max_length=1)
+    cliente_rsocial = models.CharField(max_length=255,verbose_name='RAZÓN SOCIAL')
+    cliente_ruc = models.CharField(max_length=20,verbose_name='RUC')
+    cliente_direccion = models.TextField(verbose_name='DIRECCION')
+    cliente_estado = models.CharField(
+        max_length=1,
+        default=ESTADO_ACTIVO,
+        choices=ESTADO_CLIENTE,
+        verbose_name='ESTADO')
     cliente_fecha_log = models.DateTimeField()
     cliente_usuario_log = models.CharField(max_length=255)
 
