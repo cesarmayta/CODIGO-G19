@@ -1,12 +1,76 @@
-<h1>Lista de Tareas</h1>
-<ul>
-    {%for tarea in tareas %}
-    <li>{{tarea.descripcion}}</li>
-    {% endfor%}
-</ul>
-<h2>Nueva Tarea</h2>
-<form action="" method="POST">
-    {% csrf_token %}
-    {{form}}
-    <input type="submit" value="Agregar"/>
-</form>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Lista de Tareas</title>
+  <!-- MDB icon -->
+  <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+  <!-- MDB -->
+  <link rel="stylesheet" href="{% static 'css/bootstrap-to-do-list.min.css' %}" />
+</head>
+
+<body>
+  <!-- Start your project here-->
+  <section class="vh-100" style="background-color: #eee;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-9 col-xl-7">
+        <div class="card rounded-3">
+          <div class="card-body p-4">
+
+            <h4 class="text-center my-3 pb-3">Lista de Tareas</h4>
+
+            <form action="" method = "POST" class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
+              {% csrf_token %}
+              <div class="col-12">
+                <div class="form-outline">
+                  {{form}}
+                </div>
+              </div>
+
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">Agregar Tarea</button>
+              </div>
+            </form>
+
+            <table class="table mb-4">
+              <thead>
+                <tr>
+                  <th scope="col">No.</th>
+                  <th scope="col">Tarea</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for tarea in tareas %}
+                <tr>
+                  <th scope="row">{{tarea.id}}</th>
+                  <td>{{tarea.descripcion}}</td>
+                  <td>{{tarea.estado}}</td>
+                  <td>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                    <button type="submit" class="btn btn-success ms-1">Completar</button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+</body>
+
+</html>
