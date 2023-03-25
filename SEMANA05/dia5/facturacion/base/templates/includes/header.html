@@ -15,7 +15,7 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="rounded-circle header-profile-user" src="{% static 'assets/images/users/avatar-3.jpg' %}"
                         alt="Header Avatar">
-                    <span class="d-none d-sm-inline-block ml-1">Jamie D.</span>
+                    <span class="d-none d-sm-inline-block ml-1">{{user.get_username}}</span>
                     <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
@@ -42,7 +42,7 @@
                         <span>Lock Account</span>
                     </a>
                     <a class="dropdown-item d-flex align-items-center justify-content-between"
-                        href="javascript:void(0)">
+                        href="{% url 'base:logout' %}">
                         <span>Log Out</span>
                     </a>
                 </div>
