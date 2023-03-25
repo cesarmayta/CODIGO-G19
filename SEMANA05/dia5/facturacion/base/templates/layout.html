@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'includes/meta.html' %}
+</head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        {% include 'includes/header.html' %}
+
+        <!-- ========== Left Sidebar Start ========== -->
+        {% include 'includes/sidebar.html' %}
+        <!-- Left Sidebar End -->
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    {% block content %}
+                    {% endblock %}
+                    <!-- end page title -->
+
+                </div> <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+            {% include 'includes/footer.html' %}
+        </div>
+        <!-- end main content-->
+
+    </div>
+    <!-- END layout-wrapper -->
+
+    <!-- Overlay-->
+    <div class="menu-overlay"></div>
+
+
+    <!-- jQuery  -->
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/metismenu.min.js' %}"></script>
+    <script src="{% static 'assets/js/waves.js' %}"></script>
+    <script src="{% static 'assets/js/simplebar.min.js' %}"></script>
+
+    <!-- App js -->
+    <script src="{% static 'assets/js/theme.js' %}"></script>
+
+</body>
+
+</html>
