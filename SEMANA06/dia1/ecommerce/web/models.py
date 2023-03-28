@@ -36,6 +36,26 @@ class Producto(models.Model):
     
     def __str__(self):
         return self.nombre
+    
+class ProductoImagen(models.Model):
+    producto = models.ForeignKey(Producto,on_delete=models.RESTRICT)
+    imagen = models.ImageField(upload_to='galeria',blank=True)
+    
+    class Meta:
+        db_table = 'tbl_producto_imagen'
+        
+    def __str__(self):
+        return self.producto.nombre
+    
+class ProductoRelacionado(models.Model):
+    producto = models.ForeignKey(Producto,related_name='Principal',on_delete=models.RESTRICT)
+    relacionado = models.ForeignKey(Producto,related_name='Relacionado',on_delete=models.RESTRICT)
+    
+    class Meta:
+        db_table = 'tbl_producto_relacionado'
+        
+    def __str__(self):
+        return self.relacionado.nombre
         
     
     
