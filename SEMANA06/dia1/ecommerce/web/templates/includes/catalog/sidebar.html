@@ -9,18 +9,22 @@
                     <h3 class="widgettitle">Categorias</h3>
                     <div class="section-sb-current">
                         <ul class="section-sb-list">
+                            {% for categoria in categorias %}
                             <li>
-                                <a href="#"><span class="section-sb-label">Electricity <span class="count">6</span></span></a>
+                                <a href="#"><span class="section-sb-label">{{categoria.nombre}} <span class="count">{{categoria.producto_set.all.count}}</span></span></a>
                             </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
                 <div class="blog-sb-widget multishopbrands_widget">
                     <h3 class="widgettitle">Marcas</h3>
                     <ul class="brands-list-sb">
+                        {% for marca in marcas %}
                         <li>
-                            <a href="#">HOOK <span class="count">5</span></a>
+                            <a href="#">{{marca.nombre}} <span class="count">{{marca.producto_set.all.count}}</span></a>
                         </li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
