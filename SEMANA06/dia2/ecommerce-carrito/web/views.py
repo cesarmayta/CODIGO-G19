@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 # Create your views here.
 from .models import (Categoria,Marca,
                      Producto,ProductoImagen,
-                     ProductoRelacionado)
+                     ProductoRelacionado,Cliente)
 """
 VISTAS PARA EL CATALOGO DE PRODUCTOS
 """
@@ -78,6 +78,87 @@ def crearUsuario(request):
             
     return render(request,'login.html')
 
+def loginUsuario(request):
+    context = {}
+    if request.method == "POST":
+        dataUsuario = request.POST["usuario"]
+        dataPassword = request.POST["password"]
+        
+        objUsuario = authenticate(request,username=dataUsuario,password=dataPassword)
+        if objUsuario is not None:
+            login(request,objUsuario)
+            return redirect("/cuenta")
+        else:
+            context = {
+                'mensajeError':'Datos Incorrectos'
+            }
+        
+        
+    return render(request,'login.html',context)
+
+from .forms import ClienteForm
 
 def cuentaUsuario(request):
-    return render(request,'cuenta.html')
+    
+    try:
+        objCliente = Cliente.objects.get(usuario=request.user)
+        
+        dataCliente = {
+            'dni':objCliente.dni,
+            'nombre':request.user.first_name,
+            'apellidos':request.user.last_name,
+            'email': request.user.email,
+            'direccion':objCliente.direccion,
+            'telefono':objCliente.telefono,
+            'sexo':objCliente.sexo,
+            'fecha_nacimiento':objCliente.fecha_nacimiento
+        }
+    except:
+        dataCliente = {
+            'nombre':request.user.first_name,
+            'apellidos':request.user.last_name,
+            'email':request.user.email
+        }
+    
+    frmCliente = ClienteForm(dataCliente)
+    context = {
+        'frmCliente':frmCliente
+    }
+    return render(request,'cuenta.html',context)
+
+def actualizarCliente(request):
+    mensaje = ""
+    frmCliente = ClienteForm(request.POST)
+    if frmCliente.is_valid():
+        dataCliente = frmCliente.cleaned_data
+            
+        #actualizar usuario
+        actUsuario = User.objects.get(pk=request.user.id)
+        actUsuario.first_name = dataCliente["nombre"]
+        actUsuario.last_name = dataCliente["apellidos"]
+        actUsuario.email = dataCliente["email"]
+        actUsuario.save()
+            
+        #registrar Cliente
+        try:
+            objCliente = Cliente.objects.get(usuario=request.user)
+        except:
+            objCliente = Cliente()
+                
+        objCliente.usuario = actUsuario
+        objCliente.nombre = dataCliente["nombre"] + " " + dataCliente["apellidos"]
+        objCliente.dni = dataCliente["dni"]
+        objCliente.direccion = dataCliente["direccion"]
+        objCliente.telefono = dataCliente["telefono"]
+        objCliente.sexo = dataCliente["sexo"]
+        objCliente.fecha_nacimiento = dataCliente["fecha_nacimiento"]
+        objCliente.save()
+            
+        mensaje = "Datos Actualizados"
+            
+    context = {
+        'mensaje':mensaje,
+        'frmCliente':frmCliente
+    }
+                
+    return render(request,'cuenta.html',context)
