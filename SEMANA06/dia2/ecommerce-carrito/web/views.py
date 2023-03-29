@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 
 # Create your views here.
 from .models import (Categoria,Marca,
@@ -29,17 +29,23 @@ def producto(request,producto_id):
 from .carrito import Cart
 
 def carrito(request):
-    request.session["total"] = 100
     return render(request,'carrito.html')
 
 def agregarCarrito(request,producto_id):
-    cantidad = 1
+    if request.method == "POST":
+        cantidad = int(request.POST['cantidad'])
+    else:
+        cantidad = 1
     
     objProducto = Producto.objects.get(pk=producto_id)
     carritoProducto = Cart(request)
     carritoProducto.add(objProducto,cantidad)
     
     #print(request.session.get("cart"))
+    if request.method == "GET":
+        return redirect("/")
+    
+    
     return render(request,'carrito.html')
 
 def eliminarProductoCarrito(request,producto_id):

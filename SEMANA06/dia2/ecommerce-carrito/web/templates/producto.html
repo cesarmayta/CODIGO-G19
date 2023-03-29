@@ -18,18 +18,21 @@
                 <p class="prod-price">${{producto.precio}}</p>
                 <p class="prod-excerpt">{{producto.descripcion}}</p>
                 <div class="prod-add">
-                    <button type="submit" class="button"><i class="icon ion-android-cart"></i> Add to cart</button>
-                    <p class="qnt-wrap prod-li-qnt">
-                        <a href="#" class="qnt-plus prod-li-plus"><i class="icon ion-arrow-up-b"></i></a>
-                        <input type="text" value="1">
-                        <a href="#" class="qnt-minus prod-li-minus"><i class="icon ion-arrow-down-b"></i></a>
-                    </p>
-                    <div class="prod-li-favorites">
-                        <a href="wishlist.html" class="hover-label add_to_wishlist"><i class="icon ion-heart"></i><span>Add to Wishlist</span></a>
-                    </div>
-                    <p class="prod-li-compare">
-                        <a href="compare.html" class="hover-label prod-li-compare-btn"><span>Compare</span><i class="icon ion-arrow-swap"></i></a>
-                    </p>
+                    <form action="{% url 'web:agregarCarrito' producto.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="button"><i class="icon ion-android-cart"></i> Add to cart</button>
+                        <p class="qnt-wrap prod-li-qnt">
+                            <a href="#" class="qnt-plus prod-li-plus"><i class="icon ion-arrow-up-b"></i></a>
+                            <input type="text" value="1" name="cantidad">
+                            <a href="#" class="qnt-minus prod-li-minus"><i class="icon ion-arrow-down-b"></i></a>
+                        </p>
+                        <div class="prod-li-favorites">
+                            <a href="wishlist.html" class="hover-label add_to_wishlist"><i class="icon ion-heart"></i><span>Add to Wishlist</span></a>
+                        </div>
+                        <p class="prod-li-compare">
+                            <a href="compare.html" class="hover-label prod-li-compare-btn"><span>Compare</span><i class="icon ion-arrow-swap"></i></a>
+                        </p>
+                    </form>
                 </div>
             </div>
             <div class="prod-props">

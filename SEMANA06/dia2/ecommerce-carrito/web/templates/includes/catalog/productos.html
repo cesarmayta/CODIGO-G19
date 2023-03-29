@@ -15,7 +15,7 @@
                             <a href="#" class="hover-label quick-view"><i class="icon ion-plus"></i><span>Quick View</span></a>
                         </p>
                         <p class="prod-i-cart">
-                            <a href="#" class="hover-label prod-addbtn"><i class="icon ion-android-cart"></i><span>Add to Cart</span></a>
+                            <a href="{% url 'web:agregarCarrito' producto.id %}" class="hover-label prod-addbtn"><i class="icon ion-android-cart"></i><span>Add to Cart</span></a>
                         </p>
                         <p class="prod-li-compare">
                             <a href="compare.html" class="hover-label prod-li-compare-btn"><span>Compare</span><i class="icon ion-arrow-swap"></i></a>
