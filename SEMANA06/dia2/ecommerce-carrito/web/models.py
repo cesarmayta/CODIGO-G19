@@ -56,6 +56,25 @@ class ProductoRelacionado(models.Model):
         
     def __str__(self):
         return self.relacionado.nombre
+    
+from django.contrib.auth.models import User
+    
+class Cliente(models.Model):
+    usuario = models.OneToOneField(User,on_delete=models.RESTRICT)
+    nombre = models.CharField(max_length=254)
+    dni = models.CharField(max_length=8)
+    sexo = models.CharField(max_length=1)
+    telefono = models.CharField(max_length=20)
+    fecha_nacimiento = models.DateField(null=True)
+    direccion = models.TextField()
+    
+    class Meta:
+        db_table = 'tbl_cliente'
+    
+    def __str__(self):
+        return self.nombre
+    
+    
         
     
     

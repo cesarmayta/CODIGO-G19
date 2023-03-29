@@ -4,13 +4,16 @@ from django.utils.html import format_html
 
 # Register your models here.
 from .models import (
-    Categoria,Marca,Producto,ProductoImagen,ProductoRelacionado
+    Categoria,Marca,Producto,
+    ProductoImagen,ProductoRelacionado,
+    Cliente
 )
 
 from ckeditor.widgets import CKEditorWidget
 
 admin.site.register(Categoria)
 admin.site.register(Marca)
+admin.site.register(Cliente)
 
 @admin.register(Producto)
 class ProductoAdmin(admin.ModelAdmin):
