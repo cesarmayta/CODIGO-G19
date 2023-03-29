@@ -61,3 +61,23 @@ def limpiarCarrito(request):
     
     return render(request,'carrito.html')
       
+      
+""" USUARIOS Y CLIENTES """
+from django.contrib.auth.models import User
+from django.contrib.auth import login,logout,authenticate
+
+def crearUsuario(request):
+    if request.method == "POST":
+        dataUsuario = request.POST['nuevo_usuario']
+        dataPassword = request.POST['nuevo_password']
+        
+        objUsuario = User.objects.create_user(username=dataUsuario,password=dataPassword)
+        if objUsuario is not None:
+            login(request,objUsuario)
+            return redirect("/cuenta")
+            
+    return render(request,'login.html')
+
+
+def cuentaUsuario(request):
+    return render(request,'cuenta.html')
