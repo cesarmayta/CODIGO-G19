@@ -202,3 +202,60 @@ def registrarPedido(request):
         'frmCliente':frmCliente
     }
     return render(request,'pedido.html',context)
+
+@login_required(login_url='/login')
+def confirmarPedido(request):
+    context = {}
+    if request.method == "POST":
+        actUsuario = User.objects.get(pk=request.user.id)
+        actUsuario.first_name = request.POST['nombre']
+        actUsuario.last_name = request.POST['apellidos']
+        actUsuario.email = request.POST['email']
+        actUsuario.save()
+        
+        try:
+            clientePedido = Cliente.object.get(usuario=request.user)
+            clientePedido.telefono = request.POST['telefono']
+            clientePedido.direccion = request.POST['direccion']
+            clientePedido.dni = request.POST['dni']
+            clientePedido.save()
+        except:
+            clientePedido = Cliente()
+            clientePedido.usuario = actUsuario
+            clientePedido.dni = request.POST['dni']
+            clientePedido.direccion = request.POST['direccion']
+            clientePedido.telefono = request.POST['telefono']
+            clientePedido.save()
+        #registramos nuevo pedido
+        nroPedido =
+        montoTotal = float(request.session.get('total'))
+        nuevoPedido = Pedido()
+        nuevoPedido.cliente = clientePedido
+        nuevoPedido.save()
+        
+        #registrmaos el detalle del pedido con el carrito de compras
+        carritoPedido = request.session.get('cart')
+        for key,value in carritoPedido.items()
+            productoPedido = Producto.objects.get(pk=value['producto_id'])
+            detalle = PedidoDetalle()
+            detalle.pedido = nuevoPedido
+            detalle.producto = productoPedido
+            detalle.cantidad = int(value['cantidad'])
+            detalle.subtotal = float(value['subtotal'])
+            detalle.save()
+        
+        #actualizar pedido
+        nroPedido = 'PED' + nuevoPedido.fecha_registro.strftime('%Y') + str(nuevoPedido.id)
+        nuevoPedido.nro_pedido = nroPedido
+        nuevoPedido.monto_total = montoTotal
+        nuevoPedido.save()
+        
+        context = {
+            'pedido':nuevoPedido
+        }
+        
+        carrito = Cart(request)
+        carrito.clear()
+        
+    return render(request,'compra.html',context) 
+        
