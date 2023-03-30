@@ -3,3 +3,4 @@ mysqlclient
 Pillow
 django-ckeditor
 django-admin-tailwind
+django-paypal

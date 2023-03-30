@@ -85,6 +85,8 @@ class Pedido(models.Model):
     nro_pedido = models.CharField(max_length=20,null=True)
     monto_total = models.DecimalField(max_digits=10,decimal_places=2)
     estado = models.CharField(max_length=1,default='0',choices=ESTADO_CHOICES)
+    forma_pago = models.CharField(max_length=20,null=True)
+    codigo_pago = models.CharField(max_length=20,null=True)
     
     class Meta:
         db_table = 'tbl_pedido'
