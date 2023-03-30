@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1 class="maincont-ttl">Registro de Compra</h1>
+    <article class="page-cont">
+        <div class="page-styling">
+            <div class="auth-wrap">
+                <div class="auth-col">
+                    <h2>Datos de Envio</h2>
+                    <form method="post" class="login" action="{% url 'web:actualizarCliente' %}">
+                        {% csrf_token %}
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </article>
+{% endblock %}

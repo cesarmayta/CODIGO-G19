@@ -3,7 +3,8 @@ from django.shortcuts import render,redirect
 # Create your views here.
 from .models import (Categoria,Marca,
                      Producto,ProductoImagen,
-                     ProductoRelacionado,Cliente)
+                     ProductoRelacionado,Cliente,
+                     Pedido,PedidoDetalle)
 """
 VISTAS PARA EL CATALOGO DE PRODUCTOS
 """
@@ -79,14 +80,22 @@ def crearUsuario(request):
     return render(request,'login.html')
 
 def loginUsuario(request):
-    context = {}
+    paginaDestino = request.GET.get('next',None)
+    context = {
+        'destino':paginaDestino
+    }
     if request.method == "POST":
         dataUsuario = request.POST["usuario"]
         dataPassword = request.POST["password"]
+        dataDestino = request.POST['destino']
         
         objUsuario = authenticate(request,username=dataUsuario,password=dataPassword)
         if objUsuario is not None:
             login(request,objUsuario)
+            
+            if dataDestino != 'None':
+                return redirect(dataDestino)
+            
             return redirect("/cuenta")
         else:
             context = {
@@ -162,3 +171,13 @@ def actualizarCliente(request):
     }
                 
     return render(request,'cuenta.html',context)
+
+""" VISTAS PARA PEDIDOS """
+from django.contrib.auth.decorators import login_required
+
+@login_required(login_url='/login')
+def registrarPedido(request):
+    context = {
+        
+    }
+    return render(request,'pedido.html',context)
