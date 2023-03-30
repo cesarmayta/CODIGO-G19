@@ -177,7 +177,28 @@ from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='/login')
 def registrarPedido(request):
-    context = {
+    try:
+        objCliente = Cliente.objects.get(usuario=request.user)
         
+        dataCliente = {
+            'nombre':request.user.first_name,
+            'apellidos':request.user.last_name,
+            'email':request.user.email,
+            'direccion':objCliente.direccion,
+            'telefono':objCliente.telefono,
+            'dni':objCliente.dni,
+            'sexo':objCliente.sexo,
+            'fecha_nacimiento':objCliente.fecha_nacimiento
+        }
+    except:
+        dataCliente = {
+            'nombre':request.user.firt_name,
+            'apellidos':request.user.last_name,
+            'email':request.user.email
+        }
+    
+    frmCliente = ClienteForm(dataCliente)
+    context = {
+        'frmCliente':frmCliente
     }
     return render(request,'pedido.html',context)
