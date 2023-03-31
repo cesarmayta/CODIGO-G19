@@ -70,5 +70,26 @@ def setAlumno(request):
     }
     
     return Response(context)
+
+""" ENDPOINTS PARA PROFESOR """
+
+from .models import Profesor
+from .serializers import ProfesorSerializer
+
+@api_view(['GET','POST'])
+def profesor(request):
+    if request.method == 'GET':
+        data = Profesor.objects.all()
+        serializer = ProfesorSerializer(data,many=True)
+        
+        return Response(serializer.data)
+    
+    elif request.method == 'POST':
+        serData = ProfesorSerializer(data=request.data)
+        if serData.is_valid():
+            serData.save()
+            return Response(serData.data)
+        else:
+            return Response(serData.errors,status=status.HTTP_400_BAD_REQUEST)
     
     
