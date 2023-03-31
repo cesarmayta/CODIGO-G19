@@ -9,7 +9,7 @@ class Tarea(models.Model):
     )
     
     descripcion = models.CharField(max_length=200)
-    fecha_registro = models.DateField()
+    fecha_registro = models.DateField(auto_now_add=True)
     estado = models.CharField(max_length=20,choices=ESTADO_CHOICES)
     
     def __str__(self):
