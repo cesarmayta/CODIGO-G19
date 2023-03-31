@@ -7,5 +7,6 @@ urlpatterns = [
     path('alumno',views.getAlumno),
     path('home',views.home),
     path('setalumno',views.setAlumno),
-    path('profesor',views.profesor)
+    path('profesor',views.profesor),
+    path('profesor/<int:profesor_id>',views.profesor_detail)
 ]

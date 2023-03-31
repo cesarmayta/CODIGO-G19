@@ -91,5 +91,29 @@ def profesor(request):
             return Response(serData.data)
         else:
             return Response(serData.errors,status=status.HTTP_400_BAD_REQUEST)
+        
+from django.core.exceptions import ObjectDoesNotExist
+
+@api_view(['GET','PUT','DELETE'])
+def profesor_detail(request,profesor_id):
+    try:
+        objProfesor = Profesor.objects.get(pk=profesor_id)
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'GET':
+        serData = ProfesorSerializer(objProfesor)
+        return Response(serData.data)
+    
+    elif request.method == 'PUT':
+        serData = ProfesorSerializer(objProfesor,data=request.data)
+        if serData.is_valid():
+            serData.save()
+            return Response(serData.data)
+        else:
+            return Response(serData.errors,status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        objProfesor.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
     
     
