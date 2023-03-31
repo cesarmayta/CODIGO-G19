@@ -117,3 +117,49 @@ def profesor_detail(request,profesor_id):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
     
+""" ENDPOINTS PARA CURSO """
+
+from .models import Curso
+from .serializers import CursoSerializer
+
+@api_view(['GET','POST'])
+def curso(request):
+    if request.method == 'GET':
+        data = Curso.objects.all()
+        serializer = CursoSerializer(data,many=True)
+        
+        return Response(serializer.data)
+    
+    elif request.method == 'POST':
+        serData = CursoSerializer(data=request.data)
+        if serData.is_valid():
+            serData.save()
+            return Response(serData.data)
+        else:
+            return Response(serData.errors,status=status.HTTP_400_BAD_REQUEST)
+        
+from django.core.exceptions import ObjectDoesNotExist
+
+@api_view(['GET','PUT','DELETE'])
+def curso_detail(request,curso_id):
+    try:
+        objCurso = Curso.objects.get(pk=curso_id)
+    except ObjectDoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'GET':
+        serData = CursoSerializer(objCurso)
+        return Response(serData.data)
+    
+    elif request.method == 'PUT':
+        serData = CursoSerializer(objCurso,data=request.data)
+        if serData.is_valid():
+            serData.save()
+            return Response(serData.data)
+        else:
+            return Response(serData.errors,status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        objCurso.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    

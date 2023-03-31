@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Alumno,Profesor
+from .models import Alumno,Profesor,Curso
 
 class AlumnoSerializer(serializers.Serializer):
     nombre = serializers.CharField()
@@ -12,4 +12,9 @@ class AlumnoSerializer(serializers.Serializer):
 class ProfesorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profesor
+        fields = '__all__'
+        
+class CursoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Curso
         fields = '__all__'

@@ -12,4 +12,10 @@ class Profesor(models.Model):
     telefono = models.CharField(max_length=20)
     dni = models.CharField(max_length=8)
     
+class Curso(models.Model):
+    nombre = models.CharField(max_length=200)
+    descripcion = models.TextField()
+    puntaje = models.IntegerField(default=0)
+    
+    
     
