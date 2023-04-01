@@ -19,7 +19,7 @@ const Products = () => {
     useEffect(()=>{
         ProductsServices.getAll().then(
             (res)=>{
-                console.log(res);
+                //console.log(res);
                 setProductos(res);
                 setRefreshProductos(false)
             }
@@ -100,11 +100,6 @@ const Products = () => {
             <Header />
             <div className="vertical-menu">
                 <div data-simplebar className="h-100">
-                    <div className="navbar-brand-box">
-                        <a href="index.html" className="logo">
-                            FACTURACION
-                        </a>
-                    </div>
                     <Sidebar />
                 </div>
             </div>
@@ -173,7 +168,7 @@ const Products = () => {
                                         <tbody>
                                             {productos.map(prod => {
                                                 return (
-                                                    <tr>
+                                                    <tr key={prod.producto_id}>
                                                         <td>{prod.producto_codigo}</td>
                                                         <td>{prod.producto_descripcion}</td>
                                                         <td>{prod.producto_precio}</td>

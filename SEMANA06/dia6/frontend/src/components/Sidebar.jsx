@@ -1,16 +1,36 @@
+import { Logolight } from "../entryfiles/imagePath"
+import { Link } from "react-router-dom"
+
 const Sidebar = () =>{
     return(
+        <>
+        <div className="navbar-brand-box">
+                            <Link to="/" className="logo">
+                                <img src={Logolight} />
+                            </Link>
+        </div>
         <div id="sidebar-menu">
 
-            <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title">Menu</li>
+            <ul className="metismenu list-unstyled" id="side-menu">
+                <li className="menu-title">Menu</li>
 
                 <li>
-                    <a href="#" class="waves-effect"><i class='bx bx-home-smile'></i><span class="badge badge-pill badge-primary float-right">7</span><span>Dashboard</span></a>
+                    <Link to="/products" className="waves-effect">
+                        <i className='bx bx-home-smile'></i>
+                        <span>Productos</span>
+                    </Link>
+                </li>
+                <li>
+                    <Link to="/invoices" className="waves-effect">
+                        <i className='bx bx-home-smile'></i>
+                        <span>Facturas</span>
+                    </Link>
                 </li>
 
             </ul>
         </div >
+        </>
+        
     )
 }
 
