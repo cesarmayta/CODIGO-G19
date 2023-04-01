@@ -33,6 +33,13 @@ class ProductService{
         })
     }
 
+    deleteOne(id){
+        return axios.delete(API_URL+"/producto/"+id)
+        .then(res=>{
+            return res.status
+        })
+    }
+
 }
 
 export default new ProductService();

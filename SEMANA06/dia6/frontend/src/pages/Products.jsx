@@ -14,6 +14,8 @@ const Products = () => {
     const [refreshProductos,setRefreshProductos] = useState(false)
     const [productoId,setProductoId] = useState(0)
 
+    const tab = <>&nbsp;&nbsp;</>;
+
     useEffect(()=>{
         ProductsServices.getAll().then(
             (res)=>{
@@ -78,6 +80,21 @@ const Products = () => {
         )
     }
 
+    const deleteProduct = (cod) =>{
+        ProductsServices.deleteOne(cod).then(
+            (res)=>{
+                setRefreshProductos(true);
+                setProducto({
+                    producto_codigo:"",
+                    producto_descripcion:"",
+                    producto_precio:0,
+                    producto_usuario_log:"admin"
+                })
+                setProductoId(cod)
+            }
+        )
+    }
+
     return(
         <div id="layout-wrapper">
             <Header />
@@ -100,42 +117,9 @@ const Products = () => {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="table-responsive">
-                                <table className="table mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>Codigo</th>
-                                            <th>Descripcion</th>
-                                            <th>Precio</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {productos.map(prod => {
-                                            return (
-                                                <tr>
-                                                    <td>{prod.producto_codigo}</td>
-                                                    <td>{prod.producto_descripcion}</td>
-                                                    <td>{prod.producto_precio}</td>
-                                                    <td>
-                                                        <button className="btn btn-success"
-                                                        onClick={()=>editProduct(prod.producto_id)}>
-                                                            Editar
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <br/>
-                        <div className="row">
                             <div className="col-xl-6">
                                 <div className="card">
                                     <div className="card-body">
-                                        <h4 className="card-title">Nuevo Producto </h4>
                                         <form onSubmit={createUpdateProduct}>
                                             <div className="form-group">
                                                 <label htmlFor="simpleinput">Codigo</label>
@@ -143,7 +127,7 @@ const Products = () => {
                                                 id="simpleinput" 
                                                 className="form-control"
                                                 name="producto_codigo" 
-                                                placeholder="Enter your text"
+                                                placeholder=""
                                                 value={producto.producto_codigo}
                                                 onChange={handleInputChange}
                                                 />
@@ -154,7 +138,7 @@ const Products = () => {
                                                 id="simpleinput" 
                                                 className="form-control"
                                                 name="producto_descripcion" 
-                                                placeholder="Enter your text"
+                                                placeholder=""
                                                 value={producto.producto_descripcion}
                                                 onChange={handleInputChange}
                                                 />
@@ -173,6 +157,42 @@ const Products = () => {
                                             <button type="submit" className="btn btn-primary waves-effect waves-light">Guardar</button>
                                         </form>
                                     </div>
+                                </div>
+                            </div>
+                            <div className="col-xl-6">
+                                <div className="table-responsive">
+                                    <table className="table mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Codigo</th>
+                                                <th>Descripcion</th>
+                                                <th>Precio</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {productos.map(prod => {
+                                                return (
+                                                    <tr>
+                                                        <td>{prod.producto_codigo}</td>
+                                                        <td>{prod.producto_descripcion}</td>
+                                                        <td>{prod.producto_precio}</td>
+                                                        <td>
+                                                            <button className="btn btn-success"
+                                                            onClick={()=>editProduct(prod.producto_id)}>
+                                                                Editar
+                                                            </button>
+                                                            {tab}
+                                                            <button className="btn btn-danger"
+                                                            onClick={()=>deleteProduct(prod.producto_id)}>
+                                                                Eliminar
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
