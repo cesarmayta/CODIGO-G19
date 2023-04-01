@@ -19,6 +19,9 @@ class Producto(models.Model):
     class Meta:
         managed = False
         db_table = 'tbl_producto'
+        
+    def __str__(self):
+        return self.producto_codigo
 
 class Cliente(models.Model):
     cliente_id = models.AutoField(primary_key=True)
@@ -32,6 +35,9 @@ class Cliente(models.Model):
     class Meta:
         managed = False
         db_table = 'tbl_cliente'
+        
+    def __str__(self):
+        return self.cliente_rsocial
 
 
 class FacturaCab(models.Model):
@@ -53,6 +59,9 @@ class FacturaCab(models.Model):
     class Meta:
         managed = False
         db_table = 'tbl_factura_cab'
+        
+    def __str__(self):
+        return self.factura_cab_serie + '-' + self.factura_cab_nro
 
 
 class FacturaDet(models.Model):
