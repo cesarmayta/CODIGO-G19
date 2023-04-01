@@ -26,6 +26,13 @@ class ProductService{
         })
     }
 
+    updateOne(id,data){
+        return axios.put(API_URL+"/producto/"+id,data)
+        .then(res=>{
+            return res.data;
+        })
+    }
+
 }
 
 export default new ProductService();

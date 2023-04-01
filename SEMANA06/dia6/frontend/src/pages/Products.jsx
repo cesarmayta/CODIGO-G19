@@ -12,6 +12,7 @@ const Products = () => {
         producto_usuario_log:"admin"
     })
     const [refreshProductos,setRefreshProductos] = useState(false)
+    const [productoId,setProductoId] = useState(0)
 
     useEffect(()=>{
         ProductsServices.getAll().then(
@@ -30,20 +31,37 @@ const Products = () => {
         })
     }
 
-    const createProduct = (e) =>{
+    const createUpdateProduct = (e) =>{
         e.preventDefault();
-        ProductsServices.setNew(producto).then(
-            (res)=>{
-                console.log(res)
-                setRefreshProductos(true)
-                setProducto({
-                    producto_codigo:"",
-                    producto_descripcion:"",
-                    producto_precio:0,
-                    producto_usuario_log:"admin"
-                })
-            }
-        )
+        if(productoId > 0){
+            ProductsServices.updateOne(productoId,producto).then(
+                (res)=>{
+                    setRefreshProductos(true);
+                    setProducto({
+                        producto_codigo:"",
+                        producto_descripcion:"",
+                        producto_precio:0,
+                        producto_usuario_log:"admin"
+                    })
+                    setProductoId(0)
+                }
+            )
+        }
+        else{
+            ProductsServices.setNew(producto).then(
+                (res)=>{
+                    console.log(res)
+                    setRefreshProductos(true)
+                    setProducto({
+                        producto_codigo:"",
+                        producto_descripcion:"",
+                        producto_precio:0,
+                        producto_usuario_log:"admin"
+                    })
+                    setProductoId(0)
+                }
+            )
+        }
     }
 
     const editProduct = (cod) =>{
@@ -55,6 +73,7 @@ const Products = () => {
                     producto_precio:res.producto_precio,
                     producto_usuario_log:"admin"
                 })
+                setProductoId(cod)
             }
         )
     }
@@ -117,7 +136,7 @@ const Products = () => {
                                 <div className="card">
                                     <div className="card-body">
                                         <h4 className="card-title">Nuevo Producto </h4>
-                                        <form onSubmit={createProduct}>
+                                        <form onSubmit={createUpdateProduct}>
                                             <div className="form-group">
                                                 <label htmlFor="simpleinput">Codigo</label>
                                                 <input type="text" 
