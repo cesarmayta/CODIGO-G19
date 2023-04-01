@@ -5,6 +5,11 @@ import ProductsServices from "../services/Products.services"
 
 const Products = () => {
     const [productos,setProductos] = useState([])
+    const [producto,setProducto] = useState({
+        producto_codigo:"",
+        producto_precio:0,
+        producto_usuario_log:"admin"
+    })
 
     useEffect(()=>{
         ProductsServices.getAll().then(
@@ -15,9 +20,25 @@ const Products = () => {
         )
     },[])
 
+    const handleInputChange = (e) =>{
+        const {name,value} = e.garget
+        return setProducto({
+            ...producto,[name]:value
+        })
+    }
+
+    const createProduct = (e) =>{
+        e.preventDefault();
+        ProductsServices.setNew(producto).then(
+            (res)=>{
+                console.log(res);
+            }
+        )
+    }
+
     return(
         <div id="layout-wrapper">
-            <Header/>
+            <Header />
             <div className="vertical-menu">
                 <div data-simplebar className="h-100">
                     <div className="navbar-brand-box">
@@ -25,44 +46,78 @@ const Products = () => {
                             FACTURACION
                         </a>
                     </div>
-                    <Sidebar/>
+                    <Sidebar />
                 </div>
             </div>
             <div className="main-content">
-                    <div className="page-content">
-                        <div class="container-fluid">
-                            <div className="row">
-                                <div className="col-12">
-                                    <h4>PRODUCTOS</h4>
-                                </div>
+                <div className="page-content">
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-12">
+                                <h4>PRODUCTOS</h4>
                             </div>
-                            <div className="row">
-                                <div class="table-responsive">
-                                    <table class="table mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th>Codigo</th>
-                                                <th>Precio</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {productos.map(prod=>{
-                                                return(
-                                                    <tr>
-                                                        <td>{prod.producto_codigo}</td>
-                                                        <td>{prod.producto_precio}</td>
-                                                        
-                                                    </tr>
-                                                )
-                                            })}
-                                        </tbody>
-                                    </table>
+                        </div>
+                        <div className="row">
+                            <div className="table-responsive">
+                                <table className="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Codigo</th>
+                                            <th>Precio</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {productos.map(prod => {
+                                            return (
+                                                <tr>
+                                                    <td>{prod.producto_codigo}</td>
+                                                    <td>{prod.producto_precio}</td>
+
+                                                </tr>
+                                            )
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <br/>
+                        <div className="row">
+                            <div className="col-xl-6">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <h4 className="card-title">Nuevo Producto </h4>
+                                        <form>
+                                            <div className="form-group">
+                                                <label for="simpleinput">Codigo</label>
+                                                <input type="text" 
+                                                id="simpleinput" 
+                                                className="form-control"
+                                                name="producto_codigo" 
+                                                placeholder="Enter your text"
+                                                value={producto.producto_codigo}
+                                                onChange={handleInputChange}
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label for="simpleinput">Precio</label>
+                                                <input type="text" 
+                                                id="simpleinput" 
+                                                className="form-control"
+                                                name="producto_precio"
+                                                placeholder="Enter your text"
+                                                value={producto.producto_precio}
+                                                onChange={handleInputChange}
+                                                />
+                                            </div>
+                                            <button type="submit" className="btn btn-primary waves-effect waves-light">Guardar</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
-            
         </div>
     )
 }

@@ -11,6 +11,14 @@ class ProductService{
             return res.data;
         })
     }
+
+    setNew(data){
+        return axios.post(API_URL+"/producto",data)
+        .then(res=>{
+            return res.data;
+        })
+    }
+
 }
 
 export default new ProductService();

@@ -12,8 +12,8 @@ class Producto(models.Model):
     producto_id = models.AutoField(primary_key=True)
     producto_codigo = models.CharField(max_length=255)
     producto_precio = models.FloatField()
-    producto_estado = models.CharField(max_length=1)
-    producto_fecha_log = models.DateTimeField()
+    producto_estado = models.CharField(max_length=1,default='1')
+    producto_fecha_log = models.DateTimeField(auto_now_add=True)
     producto_usuario_log = models.CharField(max_length=255)
 
     class Meta:
