@@ -19,6 +19,13 @@ class ProductService{
         })
     }
 
+    getOne(id){
+        return axios.get(API_URL+"/producto/"+id)
+        .then(res=>{
+            return res.data;
+        })
+    }
+
 }
 
 export default new ProductService();

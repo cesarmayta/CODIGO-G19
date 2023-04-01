@@ -11,18 +11,20 @@ const Products = () => {
         producto_precio:0,
         producto_usuario_log:"admin"
     })
+    const [refreshProductos,setRefreshProductos] = useState(false)
 
     useEffect(()=>{
         ProductsServices.getAll().then(
             (res)=>{
                 console.log(res);
                 setProductos(res);
+                setRefreshProductos(false)
             }
         )
-    },[])
+    },[refreshProductos])
 
     const handleInputChange = (e) =>{
-        const {name,value} = e.garget
+        const {name,value} = e.target
         return setProducto({
             ...producto,[name]:value
         })
@@ -32,7 +34,27 @@ const Products = () => {
         e.preventDefault();
         ProductsServices.setNew(producto).then(
             (res)=>{
-                console.log(res);
+                console.log(res)
+                setRefreshProductos(true)
+                setProducto({
+                    producto_codigo:"",
+                    producto_descripcion:"",
+                    producto_precio:0,
+                    producto_usuario_log:"admin"
+                })
+            }
+        )
+    }
+
+    const editProduct = (cod) =>{
+        ProductsServices.getOne(cod).then(
+            (res)=>{
+                setProducto({
+                    producto_codigo:res.producto_codigo,
+                    producto_descripcion:res.producto_descripcion,
+                    producto_precio:res.producto_precio,
+                    producto_usuario_log:"admin"
+                })
             }
         )
     }
@@ -66,6 +88,7 @@ const Products = () => {
                                             <th>Codigo</th>
                                             <th>Descripcion</th>
                                             <th>Precio</th>
+                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -75,6 +98,12 @@ const Products = () => {
                                                     <td>{prod.producto_codigo}</td>
                                                     <td>{prod.producto_descripcion}</td>
                                                     <td>{prod.producto_precio}</td>
+                                                    <td>
+                                                        <button className="btn btn-success"
+                                                        onClick={()=>editProduct(prod.producto_id)}>
+                                                            Editar
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                             )
                                         })}
@@ -88,9 +117,9 @@ const Products = () => {
                                 <div className="card">
                                     <div className="card-body">
                                         <h4 className="card-title">Nuevo Producto </h4>
-                                        <form>
+                                        <form onSubmit={createProduct}>
                                             <div className="form-group">
-                                                <label for="simpleinput">Codigo</label>
+                                                <label htmlFor="simpleinput">Codigo</label>
                                                 <input type="text" 
                                                 id="simpleinput" 
                                                 className="form-control"
@@ -101,7 +130,7 @@ const Products = () => {
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <label for="simpleinput">Descripción</label>
+                                                <label htmlFor="simpleinput">Descripción</label>
                                                 <input type="text" 
                                                 id="simpleinput" 
                                                 className="form-control"
@@ -112,7 +141,7 @@ const Products = () => {
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <label for="simpleinput">Precio</label>
+                                                <label htmlFor="simpleinput">Precio</label>
                                                 <input type="text" 
                                                 id="simpleinput" 
                                                 className="form-control"
