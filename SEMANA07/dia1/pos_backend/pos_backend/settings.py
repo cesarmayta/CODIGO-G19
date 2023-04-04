@@ -39,12 +39,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'cloudinary',
     'corsheaders',
+    'django_admin_tailwind',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djaa_list_filter',
 ]
 
 MIDDLEWARE = [
