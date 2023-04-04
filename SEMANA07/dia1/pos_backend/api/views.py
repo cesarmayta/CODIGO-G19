@@ -22,3 +22,16 @@ class MesaView(APIView):
         }
         
         return Response(context)
+    
+class CategoriaView(APIView):
+    
+    def get(self,request):
+        data = Categoria.objects.all()
+        serData = CategoriaSerializer(data,many=True)
+        
+        context = {
+            'ok':True,
+            'content':serData.data
+        }
+        
+        return Response(context)
