@@ -33,7 +33,7 @@ class Plato(models.Model):
                                     decimal_places=2,
                                     default=0,
                                     verbose_name='Precio')
-    categoria_id = models.ForeignKey(Categoria,
+    categoria_id = models.ForeignKey(Categoria,related_name='Platos'
                                      db_column='categoria_id',
                                      on_delete=models.RESTRICT,
                                      verbose_name='Categoria')

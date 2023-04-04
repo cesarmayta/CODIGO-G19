@@ -17,7 +17,7 @@ admin.site.register(Categoria)
 class PlatoAdmin(admin.ModelAdmin):
     
     def imagen_html(self,obj):
-        return format_html('<img src="{}" width=100px />'.format(obj.plato_img.url))
+        return format_html('<a href="{}" target="_blank"><img src="{}" width=100px /></a>'.format(obj.plato_img.url,obj.plato_img.url))
     
     list_display = ('plato_nom','categoria_id','imagen_html','plato_pre')
     list_editable = ('plato_pre',)

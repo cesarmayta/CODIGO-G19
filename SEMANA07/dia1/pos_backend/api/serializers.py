@@ -1,7 +1,8 @@
 from rest_framework import serializers
+from datetime import date
 
 from .models import (
-    Mesa,Categoria
+    Mesa,Categoria,Plato
 )
 
 class CategoriaSerializer(serializers.ModelSerializer):
@@ -13,3 +14,20 @@ class MesaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mesa
         fields = '__all__'
+        
+class PlatoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Plato
+        fields = '__all__'
+        
+    def to_representation(self,instance):
+        representation = super().to_representation(instance)
+        #representation['time'] = date.today()
+        representation['plato_img'] = instance.plato_img.url
+        return representation
+    
+class CategoriaPlatosSerializer(serializers.ModelSerializer):
+    Platos = PlatoSerializer(many=True,read_only=True)
+    class Meta:
+        model = Categoria
+        fields = ['categoria_id','categoria_nom','Platos']
