@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 // import miImagen from './../../../assets/images/achirvo.svg';
 
 const PosHeader = () => {
-	const { usu_nom } = useSelector((state) => state.auth);
+	const { usu_nom,usu_img } = useSelector((state) => state.auth);
 	return (
 		<header className="header">
 			<div className="header__logo">
@@ -24,7 +24,7 @@ const PosHeader = () => {
 				<Link to="/admin/dashboard" className="btn btn-success">
 					Ir a Dashboard
 				</Link>
-				<img src="https://randomuser.me/api/portraits/men/90.jpg" alt="" />
+				<img src={usu_img} alt="" />
 				<span>{usu_nom}</span>
 			</div>
 		</header>

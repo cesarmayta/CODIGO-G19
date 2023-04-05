@@ -39,7 +39,8 @@ export const iniciarSesionAction = (correo, password) => {
 			let payload = token.split('.')[1];
 			let payloadDecoded = atob(payload);
 			let payloadJSON = JSON.parse(payloadDecoded);
-			//console.log("nombre de usuario" + payloadJSON.usu_nom);
+			console.log("nombre de usuario" + payloadJSON.usu_nom);
+			console.log("foto de usuario " + payloadJSON.usu_img);
 			dispatch({
 				type: SET_SUCCESS_LOGIN,
 				payload: {
@@ -47,6 +48,7 @@ export const iniciarSesionAction = (correo, password) => {
 					usu_nom: payloadJSON.usu_nom,
 					usu_id: payloadJSON.usu_id,
 					usu_tipo: payloadJSON.usu_tipo,
+					usu_img: payloadJSON.usu_img,
 					token: token
 				}
 			});

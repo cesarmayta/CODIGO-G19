@@ -159,3 +159,4 @@ SIMPLE_JWT = {
   "TOKEN_OBTAIN_SERIALIZER": "api_auth.serializers.LoginSerializer",
   # ...
 }
+

@@ -10,7 +10,8 @@ const initialState = {
 	usu_nom: null,
 	cargando: false,
 	usu_tipo: null,
-	usu_id: null
+	usu_id: null,
+	usu_img:null
 };
 
 export const authReducer = (state = initialState, action) => {
