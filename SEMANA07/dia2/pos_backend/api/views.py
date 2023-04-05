@@ -12,7 +12,8 @@ from .serializers import (
     PlatoSerializer,
     CategoriaPlatosSerializer,
     PedidoSerializerPOST,
-    PedidoPlatoSerializerPOST
+    PedidoPlatoSerializerPOST,
+    PedidoSerializerGET
 )
 
 class MesaView(APIView):
@@ -69,6 +70,17 @@ class CategoriaPlatosView(APIView):
         return Response(context)
     
 class PedidoView(APIView):
+    
+    def get(self,request):
+        data = Pedido.objects.all()
+        serData = PedidoSerializerGET(data,many=True)
+        
+        context = {
+            'ok':True,
+            'pedidos':serData.data
+        }
+        
+        return Response(context)
     
     def post(self,request):
         serData = PedidoSerializerPOST(data=request.data)
