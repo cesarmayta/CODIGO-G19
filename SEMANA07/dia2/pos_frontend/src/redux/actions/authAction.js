@@ -20,7 +20,7 @@ export const iniciarSesionAction = (correo, password) => {
 	return async (dispatch) => {
 		dispatch(inicioCargandoLogin());
 
-		const endpoint = `${URL_BACKEND}/login`;
+		const endpoint = `${URL_BACKEND}/login/`;
 		console.log(correo);
 		console.log(password);
 		const response = await axios.post(
@@ -34,18 +34,18 @@ export const iniciarSesionAction = (correo, password) => {
 		);
 		if (response.status === 200) {
 			console.log(response.data);
-			let { token } = response.data;
+			let { token } = response.data.access;
 			localStorage.setItem('token', token);
-			let payload = token.split('.')[1];
-			let payloadDecoded = atob(payload);
-			let payloadJSON = JSON.parse(payloadDecoded);
+			//let payload = token.split('.')[1];
+			//let payloadDecoded = atob(payload);
+			//let payloadJSON = JSON.parse(payloadDecoded);
 			dispatch({
 				type: SET_SUCCESS_LOGIN,
 				payload: {
 					autenticado: true,
-					usu_nom: payloadJSON.usu_nom,
-					usu_id: payloadJSON.usu_id,
-					usu_tipo: payloadJSON.usu_tipo,
+					//usu_nom: payloadJSON.usu_nom,
+					//usu_id: payloadJSON.usu_id,
+					//usu_tipo: payloadJSON.usu_tipo,
 					token: token
 				}
 			});
