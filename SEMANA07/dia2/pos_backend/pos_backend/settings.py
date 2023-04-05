@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'cloudinary',
     'corsheaders',
+    'rest_framework_simplejwt',
     'django_admin_tailwind',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -48,6 +49,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'djaa_list_filter',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
