@@ -48,6 +48,7 @@ class Plato(models.Model):
 class Pedido(models.Model):
     ESTADO_CHOICES = (
         ('solicitado','Solicitado'),
+        ('pagado','Pagado'),
         ('entregado','Entregado')
     )
     
