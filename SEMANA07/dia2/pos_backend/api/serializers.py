@@ -47,7 +47,7 @@ class PedidoSerializerPOST(serializers.ModelSerializer):
         fields = ['pedido_fech','pedido_nro','pedido_est','usu_id','mesa_id','pedidoplatos']
         
     def create(self,validated_data):
-        lista_pedido_plato = validated_data.pop('pedidosplatos')
+        lista_pedido_plato = validated_data.pop('pedidoplatos')
         pedido = Pedido.objects.create(**validated_data)
         for obj_pedido_plato in lista_pedido_plato:
             PedidoPlato.objects.create(pedido_id=pedido,**obj_pedido_plato)
