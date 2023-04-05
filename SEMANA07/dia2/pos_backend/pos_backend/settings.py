@@ -36,6 +36,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'api',
+    'api_auth',
     'rest_framework',
     'cloudinary',
     'corsheaders',
@@ -152,3 +153,9 @@ cloudinary.config(
   api_key = config("CLOUDINARY_API_KEY"),
   api_secret = config("CLOUDINARY_API_SECRET")
 )
+
+SIMPLE_JWT = {
+  # It will work instead of the default serializer(TokenObtainPairSerializer).
+  "TOKEN_OBTAIN_SERIALIZER": "api_auth.serializers.LoginSerializer",
+  # ...
+}
