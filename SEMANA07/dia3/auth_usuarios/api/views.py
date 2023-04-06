@@ -35,6 +35,18 @@ class TokenView(APIView):
         }
         return Response(context)
     
+from rest_framework_simplejwt.authentication import JWTAuthentication
+    
+class JWTView(APIView):
+    authentication_classes  = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def get(self,request):
+        context = {
+            'user':str(request.user)
+        }
+        return Response(context)
+    
 """" TOKEN AUTHENTICATION """
 
 from rest_framework.authtoken.models import Token
@@ -52,6 +64,29 @@ class LoginTokenView(APIView):
             context = {
                 'status':True,
                 'token':user.auth_token.key
+            }
+        else:
+            context = {
+                'status':False,
+                'error':'datos incorrectos'
+            }
+            
+        return Response(context)
+    
+""" jwt token authentication """
+from rest_framework_simplejwt.tokens import RefreshToken
+class LoginJWTView(APIView):
+    def post(self,request):
+        username = request.data.get("username")
+        password = request.data.get("password")
+        
+        user = authenticate(username=username,password=password)
+        
+        if user:
+            refresh = RefreshToken.for_user(user)
+            context = {
+                'status':True,
+                'token':str(refresh.access_token)
             }
         else:
             context = {
