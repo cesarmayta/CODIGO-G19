@@ -9,5 +9,6 @@ urlpatterns=[
     path('usuariotoken',views.TokenView.as_view()),
     path('logintoken',views.LoginTokenView.as_view()),
     path('usuariojwt',views.JWTView.as_view()),
-    path('loginjwt',views.LoginJWTView.as_view())
+    path('loginjwt',views.LoginJWTView.as_view()),
+    path('resetpassword',views.ResetPasswordView.as_view())
 ]

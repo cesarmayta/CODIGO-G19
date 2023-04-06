@@ -95,3 +95,24 @@ class LoginJWTView(APIView):
             }
             
         return Response(context)
+    
+from django.core.mail import send_mail
+
+class ResetPasswordView(APIView):
+    def post(self,request):
+        email = request.data.get("email")
+        
+        send_mail(
+            'RECUPERACION DE CORREO',
+            'Tu nueva clave es 12345',
+            'cmaytacodigog19@gmail.com',
+            [email],
+            fail_silently=False,
+        )
+        
+        context = {
+            'status':True,
+            'content':'correo enviado'
+        }
+        
+        return Response(context)
