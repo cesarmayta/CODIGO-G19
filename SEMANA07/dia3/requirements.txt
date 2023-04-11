@@ -1,5 +1,0 @@
-django==3.2
-djangorestframework
-djangorestframework-simplejwt
-djoser
-social-auth-app-django
