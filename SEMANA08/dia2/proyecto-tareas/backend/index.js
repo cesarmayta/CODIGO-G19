@@ -24,6 +24,22 @@ app.get('/tarea',(req,res)=>{
     })
 })
 
+app.get('/tarea/:id',(req,res)=>{
+    const {id} = req.params;
+
+    const query = `select * from tarea where id=?`
+
+    mysqlConnection.query(query,[id],(err,rows,fields)=>{
+        if(!err){
+            res.json(rows)
+        }
+        else{
+            console.log(err)
+        }
+    })
+})
+
+
 app.post('/tarea',(req,res)=>{
     const {descripcion,estado} = req.body;
 
@@ -41,6 +57,28 @@ app.post('/tarea',(req,res)=>{
             console.log(err);
         }
     })
+})
+
+app.put('/tarea/:id',(req,res)=>{
+    const {descripcion,estado} = req.body;
+    const {id} = req.params;
+
+    const query = `update tarea set
+                   descripcion=?,estado=?
+                   where id=?`
+
+    mysqlConnection.query(query,[descripcion,estado,id],
+        (err,rows,fields)=>{
+            if(!err){
+                res.json({
+                    'status':true,
+                    'content':'registro actualizado'
+                })
+            }
+            else{
+                console.log(err);
+            }
+        })
 })
 
 app.listen(5000,()=>console.log('http://localhost:5000'))
