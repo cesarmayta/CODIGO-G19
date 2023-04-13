@@ -1,4 +1,6 @@
 const express = require('express')
+const {config} = require('./config');
+
 const app = express()
 
 app.get('/',(req,res)=>{
@@ -8,4 +10,4 @@ app.get('/',(req,res)=>{
     })
 })
 
-app.listen(5000,()=>console.log("http://localhost:5000"))
+app.listen(config.port,()=>console.log("http://localhost:"+config.port))
