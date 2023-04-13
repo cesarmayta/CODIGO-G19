@@ -20,12 +20,6 @@ const Sidebar = () =>{
                         <span>Categorias</span>
                     </Link>
                 </li>
-                <li>
-                    <Link to="/invoices" className="waves-effect">
-                        <i className='bx bx-home-smile'></i>
-                        <span>Facturas</span>
-                    </Link>
-                </li>
 
             </ul>
         </div >

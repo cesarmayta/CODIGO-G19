@@ -17,21 +17,21 @@ class CategoriaService{
     setNew(data){
         return axios.post(API_URL+"/"+this.table_name,data)
         .then(res=>{
-            return res.data;
+            return res.data.content;
         })
     }
 
     getOne(id){
         return axios.get(API_URL+"/"+this.table_name+"/"+id)
         .then(res=>{
-            return res.data;
+            return res.data.content;
         })
     }
 
     updateOne(id,data){
         return axios.put(API_URL+"/"+this.table_name+"/"+id,data)
         .then(res=>{
-            return res.data;
+            return res.data.content;
         })
     }
 

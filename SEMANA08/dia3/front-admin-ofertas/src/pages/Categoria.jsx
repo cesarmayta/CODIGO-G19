@@ -1,12 +1,11 @@
 import { useState,useEffect } from "react"
 import Header from "../components/Header"
 import Sidebar from "../components/Sidebar"
-import CategoriaServices from "../services/Categoria.services"
+import CategoriaService from "../services/Categoria.services"
 
 const Categoria = () => {
     const [data,setData] = useState([])
-    const [newData,setnewData] = useState({
-        id:"",
+    const [newData,setNewData] = useState({
         descripcion:""
     })
     const [refreshData,setRefreshData] = useState(false)
@@ -15,7 +14,7 @@ const Categoria = () => {
     const tab = <>&nbsp;&nbsp;</>;
 
     useEffect(()=>{
-        CategoriaServices.getAll().then(
+        CategoriaService.getAll().then(
             (res)=>{
                 setData(res);
                 setRefreshData(false)
@@ -25,74 +24,62 @@ const Categoria = () => {
 
     const handleInputChange = (e) =>{
         const {name,value} = e.target
-        return setData({
-            ...data,[name]:value
+        return setNewData({
+            ...newData,[name]:value
         })
     }
 
-    /*
-    const createUpdateProduct = (e) =>{
+    
+    const createUpdateData = (e) =>{
         e.preventDefault();
-        if(productoId > 0){
-            ProductsServices.updateOne(productoId,producto).then(
+        if(dataId > 0){
+            CategoriaService.updateOne(dataId,newData).then(
                 (res)=>{
-                    setRefreshProductos(true);
-                    setProducto({
-                        producto_codigo:"",
-                        producto_descripcion:"",
-                        producto_precio:0,
-                        producto_usuario_log:"admin"
+                    setRefreshData(true);
+                    setNewData({
+                        descripcion:"",
                     })
-                    setProductoId(0)
+                    setDataId(0)
                 }
             )
         }
         else{
-            ProductsServices.setNew(producto).then(
+            CategoriaService.setNew(newData).then(
                 (res)=>{
                     console.log(res)
-                    setRefreshProductos(true)
-                    setProducto({
-                        producto_codigo:"",
-                        producto_descripcion:"",
-                        producto_precio:0,
-                        producto_usuario_log:"admin"
+                    setRefreshData(true)
+                    setNewData({
+                        descripcion:"",
                     })
-                    setProductoId(0)
+                    setDataId(0)
                 }
             )
         }
     }
 
-    const editProduct = (cod) =>{
-        ProductsServices.getOne(cod).then(
+    const editData = (cod) =>{
+        CategoriaService.getOne(cod).then(
             (res)=>{
-                setProducto({
-                    producto_codigo:res.producto_codigo,
-                    producto_descripcion:res.producto_descripcion,
-                    producto_precio:res.producto_precio,
-                    producto_usuario_log:"admin"
+                setNewData({
+                    descripcion:res.descripcion,
                 })
-                setProductoId(cod)
+                setDataId(cod)
             }
         )
     }
 
-    const deleteProduct = (cod) =>{
-        ProductsServices.deleteOne(cod).then(
+    const deleteData = (cod) =>{
+        CategoriaService.deleteOne(cod).then(
             (res)=>{
-                setRefreshProductos(true);
-                setProducto({
-                    producto_codigo:"",
-                    producto_descripcion:"",
-                    producto_precio:0,
-                    producto_usuario_log:"admin"
+                setRefreshData(true);
+                setNewData({
+                    descripcion:"",
                 })
-                setProductoId(cod)
+                setDataId(0)
             }
         )
     }
-*/
+
     return(
         <div id="layout-wrapper">
             <Header />
@@ -113,18 +100,7 @@ const Categoria = () => {
                             <div className="col-xl-6">
                                 <div className="card">
                                     <div className="card-body">
-                                        <form>
-                                            <div className="form-group">
-                                                <label htmlFor="simpleinput">Codigo</label>
-                                                <input type="text" 
-                                                id="simpleinput" 
-                                                className="form-control"
-                                                name="id" 
-                                                placeholder=""
-                                                value={data.id}
-                                                onChange={handleInputChange}
-                                                />
-                                            </div>
+                                        <form onSubmit={createUpdateData}>
                                             <div className="form-group">
                                                 <label htmlFor="simpleinput">Descripción</label>
                                                 <input type="text" 
@@ -132,7 +108,7 @@ const Categoria = () => {
                                                 className="form-control"
                                                 name="descripcion" 
                                                 placeholder=""
-                                                value={data.descripcion}
+                                                value={newData.descripcion}
                                                 onChange={handleInputChange}
                                                 />
                                             </div>
@@ -146,7 +122,6 @@ const Categoria = () => {
                                     <table className="table mb-0">
                                         <thead>
                                             <tr>
-                                                <th>Codigo</th>
                                                 <th>Descripcion</th>
                                                 <th>Acciones</th>
                                             </tr>
@@ -155,15 +130,16 @@ const Categoria = () => {
                                             {data.map(dt => {
                                                 return (
                                                     <tr key={dt.id}>
-                                                        <td>{dt.id}</td>
                                                         <td>{dt.descripcion}</td>
                                                         <td>
                                                             <button className="btn btn-success"
+                                                            onClick={()=>editData(dt.id)}
                                                             >
                                                                 Editar
                                                             </button>
                                                             {tab}
                                                             <button className="btn btn-danger"
+                                                            onClick={()=>deleteData(dt.id)}
                                                             >
                                                                 Eliminar
                                                             </button>
