@@ -52,6 +52,28 @@ function categoriaApi(app){
             console.log(err)
         }
     })
+
+    router.put('/:id',async function(req,res){
+        const {id} = req.params
+        const {body:data} = req
+
+        try{
+            const updateData = await objCategoria.update({data,id})
+            if(updateData.length > 0){
+                res.status(200).json({
+                    status:true,
+                    content:updateData[0]
+                })
+            }else{
+                res.status(404).json({
+                    status:false,
+                    content:'no se encontro el registro'
+                })
+            }
+        }catch(err){
+            console.log(err)
+        }
+    })
 }
 
 module.exports = categoriaApi

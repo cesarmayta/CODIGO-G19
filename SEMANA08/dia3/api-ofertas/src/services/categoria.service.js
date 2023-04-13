@@ -35,6 +35,20 @@ class CategoriaService{
         const result = await this.db.querySql(sqlGetById)
         return result
     }
+
+    async update({data,id}){
+        const sqlUpdate = `update tbl_${this.table_name} set
+                           ${this.table_name}_descripcion =  '${data.descripcion}' 
+                           where ${this.table_name}_id = '${id}'`
+
+        await this.db.querySql(sqlUpdate)
+        const sqlUpdateData = `select ${this.table_name}_id as id,
+                         ${this.table_name}_descripcion as descripcion
+                         from tbl_${this.table_name} 
+                         where ${this.table_name}_id = '${id}'`
+        const result = await this.db.querySql(sqlUpdateData)
+        return result;
+    }
 }
 
 module.exports = CategoriaService
