@@ -49,6 +49,13 @@ class CategoriaService{
         const result = await this.db.querySql(sqlUpdateData)
         return result;
     }
+
+    async delete(id){
+        const sqlDeleteData = `delete from tbl_${this.table_name}
+                               where ${this.table_name}_id = '${id}'`
+        await this.db.querySql(sqlDeleteData)
+        return true;
+    }
 }
 
 module.exports = CategoriaService
