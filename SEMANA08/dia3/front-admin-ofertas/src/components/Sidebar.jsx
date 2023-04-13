@@ -15,9 +15,9 @@ const Sidebar = () =>{
                 <li className="menu-title">Menu</li>
 
                 <li>
-                    <Link to="/products" className="waves-effect">
+                    <Link to="/categoria" className="waves-effect">
                         <i className='bx bx-home-smile'></i>
-                        <span>Productos</span>
+                        <span>Categorias</span>
                     </Link>
                 </li>
                 <li>

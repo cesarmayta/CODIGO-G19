@@ -1,38 +1,36 @@
 import { useState,useEffect } from "react"
 import Header from "../components/Header"
 import Sidebar from "../components/Sidebar"
-import ProductsServices from "../services/Products.services"
+import CategoriaServices from "../services/Categoria.services"
 
-const Products = () => {
-    const [productos,setProductos] = useState([])
-    const [producto,setProducto] = useState({
-        producto_codigo:"",
-        producto_descripcion:"",
-        producto_precio:0,
-        producto_usuario_log:"admin"
+const Categoria = () => {
+    const [data,setData] = useState([])
+    const [newData,setnewData] = useState({
+        id:"",
+        descripcion:""
     })
-    const [refreshProductos,setRefreshProductos] = useState(false)
-    const [productoId,setProductoId] = useState(0)
+    const [refreshData,setRefreshData] = useState(false)
+    const [dataId,setDataId] = useState(0)
 
     const tab = <>&nbsp;&nbsp;</>;
 
     useEffect(()=>{
-        ProductsServices.getAll().then(
+        CategoriaServices.getAll().then(
             (res)=>{
-                //console.log(res);
-                setProductos(res);
-                setRefreshProductos(false)
+                setData(res);
+                setRefreshData(false)
             }
         )
-    },[refreshProductos])
+    },[refreshData])
 
     const handleInputChange = (e) =>{
         const {name,value} = e.target
-        return setProducto({
-            ...producto,[name]:value
+        return setData({
+            ...data,[name]:value
         })
     }
 
+    /*
     const createUpdateProduct = (e) =>{
         e.preventDefault();
         if(productoId > 0){
@@ -94,7 +92,7 @@ const Products = () => {
             }
         )
     }
-
+*/
     return(
         <div id="layout-wrapper">
             <Header />
@@ -108,22 +106,22 @@ const Products = () => {
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-12">
-                                <h4>PRODUCTOS</h4>
+                                <h4>CATEGORIAS</h4>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-xl-6">
                                 <div className="card">
                                     <div className="card-body">
-                                        <form onSubmit={createUpdateProduct}>
+                                        <form>
                                             <div className="form-group">
                                                 <label htmlFor="simpleinput">Codigo</label>
                                                 <input type="text" 
                                                 id="simpleinput" 
                                                 className="form-control"
-                                                name="producto_codigo" 
+                                                name="id" 
                                                 placeholder=""
-                                                value={producto.producto_codigo}
+                                                value={data.id}
                                                 onChange={handleInputChange}
                                                 />
                                             </div>
@@ -132,20 +130,9 @@ const Products = () => {
                                                 <input type="text" 
                                                 id="simpleinput" 
                                                 className="form-control"
-                                                name="producto_descripcion" 
+                                                name="descripcion" 
                                                 placeholder=""
-                                                value={producto.producto_descripcion}
-                                                onChange={handleInputChange}
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="simpleinput">Precio</label>
-                                                <input type="text" 
-                                                id="simpleinput" 
-                                                className="form-control"
-                                                name="producto_precio"
-                                                placeholder="Enter your text"
-                                                value={producto.producto_precio}
+                                                value={data.descripcion}
                                                 onChange={handleInputChange}
                                                 />
                                             </div>
@@ -161,25 +148,23 @@ const Products = () => {
                                             <tr>
                                                 <th>Codigo</th>
                                                 <th>Descripcion</th>
-                                                <th>Precio</th>
                                                 <th>Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {productos.map(prod => {
+                                            {data.map(dt => {
                                                 return (
-                                                    <tr key={prod.producto_id}>
-                                                        <td>{prod.producto_codigo}</td>
-                                                        <td>{prod.producto_descripcion}</td>
-                                                        <td>{prod.producto_precio}</td>
+                                                    <tr key={dt.id}>
+                                                        <td>{dt.id}</td>
+                                                        <td>{dt.descripcion}</td>
                                                         <td>
                                                             <button className="btn btn-success"
-                                                            onClick={()=>editProduct(prod.producto_id)}>
+                                                            >
                                                                 Editar
                                                             </button>
                                                             {tab}
                                                             <button className="btn btn-danger"
-                                                            onClick={()=>deleteProduct(prod.producto_id)}>
+                                                            >
                                                                 Eliminar
                                                             </button>
                                                         </td>
@@ -198,4 +183,4 @@ const Products = () => {
     )
 }
 
-export default Products
+export default Categoria

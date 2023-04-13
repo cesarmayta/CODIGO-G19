@@ -1,40 +1,42 @@
 import axios from 'axios'
 import { API_URL } from '../lib/Enviroments'
 
-class ProductService{
+class CategoriaService{
 
-    
+    constructor(){
+        this.table_name = 'categoria'
+    }
     
     getAll(){
-        return axios.get(API_URL+"/producto")
+        return axios.get(API_URL+"/"+this.table_name)
         .then(res=>{
-            return res.data;
+            return res.data.content;
         })
     }
 
     setNew(data){
-        return axios.post(API_URL+"/producto",data)
+        return axios.post(API_URL+"/"+this.table_name,data)
         .then(res=>{
             return res.data;
         })
     }
 
     getOne(id){
-        return axios.get(API_URL+"/producto/"+id)
+        return axios.get(API_URL+"/"+this.table_name+"/"+id)
         .then(res=>{
             return res.data;
         })
     }
 
     updateOne(id,data){
-        return axios.put(API_URL+"/producto/"+id,data)
+        return axios.put(API_URL+"/"+this.table_name+"/"+id,data)
         .then(res=>{
             return res.data;
         })
     }
 
     deleteOne(id){
-        return axios.delete(API_URL+"/producto/"+id)
+        return axios.delete(API_URL+"/"+this.table_name+"/"+id)
         .then(res=>{
             return res.status
         })
@@ -42,4 +44,4 @@ class ProductService{
 
 }
 
-export default new ProductService();
+export default new CategoriaService();
