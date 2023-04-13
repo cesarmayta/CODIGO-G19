@@ -1,10 +1,13 @@
 const express = require('express')
 const {config} = require('./config');
+const cors = require('cors')
 
 const categoriaApi = require('./routes/categoria.routes')
 const experienciaApi = require('./routes/experiencia.routes')
 
 const app = express()
+
+app.use(cors())
 
 app.use(express.json())
 
