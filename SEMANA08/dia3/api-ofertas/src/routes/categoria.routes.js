@@ -32,6 +32,26 @@ function categoriaApi(app){
             console.log(err)
         }
     })
+
+    router.get('/:id',async function(req,res){
+        const {id} = req.params
+        try{
+            const data = await objCategoria.getById(id);
+            if(data.length > 0){
+                res.status(200).json({
+                    status:true,
+                    content:data[0]
+                })
+            }else{
+                res.status(404).json({
+                    status:false,
+                    content:'no hay registros'
+                })
+            }
+        }catch(err){
+            console.log(err)
+        }
+    })
 }
 
 module.exports = categoriaApi
