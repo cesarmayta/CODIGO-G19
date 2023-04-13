@@ -19,7 +19,11 @@ app.get('/',(req,res)=>{
 app.get('/tarea',(req,res)=>{
     mysqlConnection.query("select * from tarea",(err,rows,fields)=>{
         if(!err){
-            res.json(rows);
+            context = {
+                'status':true,
+                'content':rows
+            }
+            res.json(context);
         }
         else{
             console.log(err);
