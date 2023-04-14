@@ -1,6 +1,8 @@
 const express = require('express')
 const CategoriaService = require('../services/categoria.service')
 
+const boom = require('@hapi/boom')
+
 function categoriaApi(app){
     const router = express.Router();
     app.use('/categoria',router)
@@ -15,7 +17,8 @@ function categoriaApi(app){
                 content:data
             })
         }catch(err){
-            console.log(err)
+            //console.log(err)
+            res.status(500).json(boom.badData('ERROR DEL SERVIDOR'))
         }
     })
 
