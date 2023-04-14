@@ -32,7 +32,7 @@ function categoriaApi(app){
                 content:newData[0]
             })
         }catch(err){
-            console.log(err)
+            res.status(500).json(boom.badData(err))
         }
     })
 
@@ -46,13 +46,14 @@ function categoriaApi(app){
                     content:data[0]
                 })
             }else{
-                res.status(404).json({
+                /*res.status(404).json({
                     status:false,
                     content:'no hay registros'
-                })
+                })*/
+                res.json(boom.notFound('no hay registros'))
             }
         }catch(err){
-            console.log(err)
+            res.status(500).json(boom.badData('error : ' + err))
         }
     })
 
@@ -68,13 +69,10 @@ function categoriaApi(app){
                     content:updateData[0]
                 })
             }else{
-                res.status(404).json({
-                    status:false,
-                    content:'no se encontro el registro'
-                })
+                res.json(boom.notFound('no hay registros'))
             }
         }catch(err){
-            console.log(err)
+            res.status(500).json(boom.badData(err))
         }
     })
 
@@ -89,13 +87,10 @@ function categoriaApi(app){
                     content:'registro eliminado'
                 })
             }else{
-                res.status(404).json({
-                    status:false,
-                    content:'no se encontraron registros'
-                })
+                res.json(boom.notFound('no hay registros'))
             }
         }catch(err){
-            console.log(err)
+            res.status(500).json(boom.badData(err))
         }
     })
 }
