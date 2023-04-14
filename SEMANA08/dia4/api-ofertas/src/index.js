@@ -5,6 +5,7 @@ const cors = require('cors')
 const categoriaApi = require('./routes/categoria.routes')
 const experienciaApi = require('./routes/experiencia.routes')
 const usuarioApi = require('./routes/usuario.routes')
+const authApi = require('./routes/auth.routes')
 
 const {errorHandler,boomErrorHandler} = require('./middlewares/error.handler')
 
@@ -25,6 +26,7 @@ app.get('/',(req,res)=>{
 categoriaApi(app)
 experienciaApi(app)
 usuarioApi(app)
+authApi(app)
 
 //manejador de errores
 app.use(boomErrorHandler)

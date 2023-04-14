@@ -25,6 +25,32 @@ class UsuarioService{
 
         return result
     }
+
+    async authenticate({usuario}){
+        try{
+            const sqlAuth = `select usuario_id as id,
+                             usuario_password as pwd
+                             from tbl_usuario
+                             where usuario_nombre = '${usuario.usuario}'`
+            const result = await this.db.querySql(sqlAuth)
+            if(await bcrypt.compare(usuario.password,result[0].pwd)){
+                const usuarioFound = {
+                    id:result[0].id,
+                    usuario:usuario.nombre
+                }
+                return usuarioFound;
+            }else{
+                const usuarioNotFound = {
+                    id:0,
+                    usaurio:'none'
+                }
+                return usuarioNotFound
+            }
+
+        }catch(err){
+            console.log(err)
+        }
+    }
 }
 
 module.exports = UsuarioService
