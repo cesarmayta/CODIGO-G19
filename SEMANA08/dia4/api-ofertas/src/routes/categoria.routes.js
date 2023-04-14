@@ -3,7 +3,11 @@ const CategoriaService = require('../services/categoria.service')
 
 const boom = require('@hapi/boom')
 
+//middlewares
 const validatorHandler = require('../middlewares/validator.handler')
+const {verifyToken} = require('../middlewares/auth.handler')
+
+
 const {catalogSchema} = require('../schemas/catalog.schema')
 
 function categoriaApi(app){
@@ -12,7 +16,7 @@ function categoriaApi(app){
 
     const objCategoria = new CategoriaService();
 
-    router.get('/',async function(req,res){
+    router.get('/',verifyToken,async function(req,res){
         try{
             const data = await objCategoria.getAll()
             res.status(200).json({
@@ -25,7 +29,7 @@ function categoriaApi(app){
         }
     })
 
-    router.post('/',
+    router.post('/',verifyToken,
         validatorHandler(catalogSchema,'body')
         ,async function(req,res){
         const {body : data} = req;

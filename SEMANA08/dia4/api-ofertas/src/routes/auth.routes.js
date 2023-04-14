@@ -1,5 +1,7 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
+const {config} = require('../config')
+
 const UsuarioService = require('../services/usuario.service')
 
 function authApi(app){
@@ -15,7 +17,7 @@ function authApi(app){
         if(authUsuario.id > 0){
             const token = jwt.sign(
                 authUsuario,
-                'qwerty123',
+                config.jwt_secret,
                 {
                     expiresIn:'1h'
                 }
