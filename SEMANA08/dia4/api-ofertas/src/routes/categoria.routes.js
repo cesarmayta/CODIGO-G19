@@ -3,6 +3,9 @@ const CategoriaService = require('../services/categoria.service')
 
 const boom = require('@hapi/boom')
 
+const validatorHandler = require('../middlewares/validator.handler')
+const {catalogSchema} = require('../schemas/catalog.schema')
+
 function categoriaApi(app){
     const router = express.Router();
     app.use('/categoria',router)
@@ -22,7 +25,9 @@ function categoriaApi(app){
         }
     })
 
-    router.post('/',async function(req,res){
+    router.post('/',
+        validatorHandler(catalogSchema,'body')
+        ,async function(req,res){
         const {body : data} = req;
         console.log(data);
         try{
@@ -57,7 +62,9 @@ function categoriaApi(app){
         }
     })
 
-    router.put('/:id',async function(req,res){
+    router.put('/:id',
+        validatorHandler(catalogSchema,'body')
+        ,async function(req,res){
         const {id} = req.params
         const {body:data} = req
 
