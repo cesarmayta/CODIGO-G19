@@ -34,7 +34,10 @@ const EmpresaSchema = {
 
 class Empresa extends Model{
     static associate(){
-
+        this.hasMany(models.Oferta,{
+            as:'ofertas',
+            foreignKey:'empresaId'
+        })
     }
 
     static config(sequelize){
