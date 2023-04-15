@@ -7,3 +7,5 @@ npx prisma migrate
 npx prisma db pull
 -script prisma client
 npx prisma generate
+-- prisma studio
+npx prisma studio
