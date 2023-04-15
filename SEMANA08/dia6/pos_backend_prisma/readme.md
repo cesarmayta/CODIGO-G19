@@ -5,3 +5,5 @@ npx prisma init
 npx prisma migrate
 -para mapear tablas a modelos
 npx prisma db pull
+-script prisma client
+npx prisma generate

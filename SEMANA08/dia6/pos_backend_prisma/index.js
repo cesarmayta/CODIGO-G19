@@ -22,4 +22,14 @@ app.get('/categoria',async (req,res)=>{
     })
 })
 
+app.post('/categoria',async (req,res)=>{
+    const newData = await prisma.tbl_categoria.create({
+        data:req.body
+    })
+    res.json({
+        status:true,
+        content:newData
+    })
+})
+
 app.listen(5000,()=>console.log("http://localhost:5000"))
