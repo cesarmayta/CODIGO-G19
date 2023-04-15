@@ -1,4 +1,5 @@
 const {models}  = require('../lib/sequelize')
+const boom = require('@hapi/boom')
 
 class EmpresaService{
 
@@ -15,6 +16,21 @@ class EmpresaService{
         const newData = await models.Empresa.create(data)
         return newData
     }
+
+    async findOne(id){
+        const data = await models.Empresa.findByPk(id)
+        if(!data){
+            throw boom.notFound('no existe el registro')
+        }
+        return data
+    }
+
+    async update(id,data){
+        const dataUpdate = await this.findOne(id)
+        const result = await dataUpdate.update(data)
+        return result
+    }
+
 }
 
 module.exports = EmpresaService
