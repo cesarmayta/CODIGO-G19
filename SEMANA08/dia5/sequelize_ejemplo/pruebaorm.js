@@ -15,6 +15,9 @@ const Alumno = sequelize.define(
     {
         nombre:Sequelize.STRING,
         email:Sequelize.STRING
+    },{
+        freezeTableName: true,
+        timestamps:false
     }
 )
 
@@ -22,4 +25,12 @@ const Alumno = sequelize.define(
 sequelize.sync()
 .then(()=>{
     console.log("migración exitosa")
+    Alumno.bulkCreate(
+        [
+            {nombre:'César Mayta',email:'cesarmayta@gmail.com'},
+            {nombre:'Claudia Gonzales',email:'clau.gz@hotmail.com'}
+        ]
+    ).then(()=>{
+        return Alumno.findAll()
+    }).then((alumnos)=>console.log(alumnos))
 })
