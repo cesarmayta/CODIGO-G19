@@ -27,8 +27,19 @@ app.get('/',(req,res)=>{
 app.get('/tarea',(req,res)=>{
     Tarea.findAll()
     .then(function(resultado){
-        console.log(resultado)
+        //console.log(resultado)
         res.json(resultado)
+    })
+})
+
+app.post('/tarea',(req,res)=>{
+    Tarea.create(
+        {
+            descripcion: req.body.descripcion,
+            estado:req.body.estado
+        }
+    ).then((data)=>{
+        res.json(data)
     })
 })
 
