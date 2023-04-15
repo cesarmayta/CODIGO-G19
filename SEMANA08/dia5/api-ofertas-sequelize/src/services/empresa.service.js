@@ -31,6 +31,12 @@ class EmpresaService{
         return result
     }
 
+    async delete(id){
+        const dataDelete = await this.findOne(id)
+        await dataDelete.destroy()
+        return true
+    }
+
 }
 
 module.exports = EmpresaService
