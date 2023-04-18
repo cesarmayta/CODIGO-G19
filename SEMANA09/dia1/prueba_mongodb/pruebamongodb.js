@@ -11,6 +11,9 @@ async function main(){
     const db = client.db('db_codigo_g19')
     const collection = db.collection('alumnos')
 
+    const insertar = await collection.insertOne({nombre:'Laura Zuñiga',email:'laura@gmail.com',nota:20})
+    console.log('nueva tarea : ',insertar)
+
     const result = await collection.find().toArray()
     console.log('listado de alumnos',result)
     return 0
