@@ -6,7 +6,7 @@ import {
   deleteCategoryService,
   getAllCategoriesService,
   postCategoryService,
-} from "../../../services/categoriesServices";
+} from "../../../services/CategoriesServices";
 
 export const Categories = () => {
   const { setAdminTitle } = useContext(AdminContext);
@@ -25,7 +25,7 @@ export const Categories = () => {
       // const token = getToken();
       const response = await getAllCategoriesService();
       if (response.status === 200) {
-        setListOfCategories(response.data.data);
+        setListOfCategories(response.data.content);
       }
     };
     fetchData();

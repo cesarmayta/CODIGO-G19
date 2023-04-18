@@ -1,7 +1,7 @@
 import { API_URL } from "@lib/Enviroments";
 
 export const getAllCategoriesService = async () => {
-  const response = await fetch(`${API_URL}/categorias/listar`, {
+  const response = await fetch(`${API_URL}/categories`, {
     // headers: {
     //   Authorization: "Bearer " + token,
     // },
@@ -12,7 +12,7 @@ export const getAllCategoriesService = async () => {
 };
 
 export const postCategoryService = async (category) => {
-  const response = await fetch(`${API_URL}/categorias/crear`, {
+  const response = await fetch(`${API_URL}/categories`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
