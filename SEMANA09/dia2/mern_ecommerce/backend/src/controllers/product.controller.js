@@ -20,4 +20,13 @@ productController.create = async (req,res)=>{
     }
 }
 
+productController.getAll = async (req,res)=>{
+    const products = await productModel.find()
+    res.json({
+        success:true,
+        message:"products have been loaded",
+        content:products
+    })
+}
+
 module.exports = productController
