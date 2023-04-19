@@ -2,6 +2,7 @@ const productController = {}
 
 const productModel = require('../models/product.model')
 
+
 productController.create = async (req,res)=>{
     try{
         const newProduct = new productModel(req.body)
