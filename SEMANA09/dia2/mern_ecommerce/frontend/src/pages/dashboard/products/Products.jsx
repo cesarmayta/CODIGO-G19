@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AdminContext } from "../../../contexts/AdminContext";
 import { getAllCategoriesService } from "../../../services/categoriesServices";
 import { getToken } from "../../../services/authServices";
+import { FaTrashAlt } from "react-icons/fa";
 import {
   getAllProducts,
   postProduct,
@@ -16,11 +17,12 @@ export const Products = () => {
   const [listOfCategories, setListOfCategories] = useState([]);
   const [image, setImage] = useState();
   const [product, setProduct] = useState({
-    name: "",
-    description: "",
-    price: 0.0,
-    stock: 0,
-    category_id: 0,
+    productId:1,
+    productName:"",
+    productDescription:"",
+    productPrice:0.0,
+    productImage:"",
+    productCategory:""
   });
   const [bandera, setBandera] = useState(false);
 
@@ -40,7 +42,7 @@ export const Products = () => {
     const fetchData = async () => {
       const token = getToken();
       const response = await getAllProducts(token);
-      setListOfProducts(response.data.data);
+      setListOfProducts(response.data.content);
     };
     fetchData();
   }, [bandera]);
@@ -104,20 +106,19 @@ export const Products = () => {
               <th>Product description</th>
               <th>Price</th>
               <th>Image</th>
-              <th>Stock</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {listOfProducts.length > 0 &&
               listOfProducts.map((product) => (
-                <tr key={product.id}>
-                  <td>{product.name}</td>
-                  <td>{product.description}</td>
-                  <td>S/ {product.price}</td>
+                <tr key={product.productId}>
+                  <td>{product.productName}</td>
+                  <td>{product.productDescription}</td>
+                  <td>S/ {product.productPrice}</td>
                   <td>
                     <img
-                      src={product.image}
+                      src={product.productImage}
                       alt="Product Preview"
                       loading={"lazy"}
                     />
@@ -125,8 +126,7 @@ export const Products = () => {
                   <td>{product.stock}</td>
                   <td>
                     <button>
-                      Details
-                      <IoIosArrowDown />
+                      <FaTrashAlt/>
                     </button>
                   </td>
                 </tr>
