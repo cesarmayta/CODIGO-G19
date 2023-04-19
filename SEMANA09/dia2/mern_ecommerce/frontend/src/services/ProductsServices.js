@@ -22,20 +22,14 @@ export const getProductById = async (id) => {
   return data;
 };
 
-export const postProduct = async (product, image, token) => {
-  let formData = new FormData();
-  formData.append("name", product.name);
-  formData.append("description", product.description);
-  formData.append("price", product.price);
-  formData.append("image", image);
-  formData.append("stock", product.stock);
-  formData.append("category_id", product.category_id);
+export const postProduct = async (product) => {
+  console.log("producto a enviar : ",product)
   const response = await fetch(`${API_URL}/products`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     },
-    body: formData,
+    body: JSON.stringify(product),
   });
   const data = await response.json();
   return data;

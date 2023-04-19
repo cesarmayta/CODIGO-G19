@@ -31,7 +31,7 @@ export const Products = () => {
       const token = getToken();
       const response = await getAllCategoriesService(token);
       if (response.status === 200) {
-        setListOfCategories(response.data.data);
+        setListOfCategories(response.data.content);
       }
     };
     fetchData();
@@ -50,9 +50,10 @@ export const Products = () => {
   const createProduct = async (event) => {
     event.preventDefault();
     try {
+      console.log("producto : ",product)
       const token = getToken();
-      const response = await postProduct(product, image, token);
-      console.log(response);
+      const response = await postProduct(product);
+      console.log(response.content);
       // if (response) {
       //   setBandera(!bandera);
       //   setProduct({
@@ -70,13 +71,9 @@ export const Products = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.currentTarget;
-    if (name === "price") {
+    if (name === "productPrice") {
       return setProduct({ ...product, [name]: parseFloat(value) });
-    } else if (name === "category_id") {
-      return setProduct({ ...product, [name]: parseInt(value) });
-    } else if (name === "stock") {
-      return setProduct({ ...product, [name]: parseInt(value) });
-    } else if (name === "image") {
+    } else if (name === "productImage") {
       return setProduct({ ...product, [name]: event.target.files[0] });
     } else {
       return setProduct({ ...product, [name]: value });
@@ -84,12 +81,14 @@ export const Products = () => {
   };
 
   const handleFileChange = async (event) => {
+    const { name,value } = event.target;
+    console.log("nombre de imagen : ",value)
     const file = event.target.files[0];
     try {
-      const response = await uploadProductImage(file);
-      if (response.success) {
-        return setProduct({ ...product, [name]: value });
-      }
+      //const response = await uploadProductImage(file);
+      //if (response.success) {
+      return setProduct({ ...product, [name]: value });
+      //}
     } catch (error) {
       return console.log(error);
     }
@@ -141,9 +140,9 @@ export const Products = () => {
           <label htmlFor="productoNombre">Product name</label>
           <input
             type="text"
-            name="name"
-            id="name"
-            value={product.name}
+            name="productName"
+            id="productName"
+            value={product.productName}
             onChange={handleInputChange}
           />
         </div>
@@ -151,9 +150,9 @@ export const Products = () => {
           <label htmlFor="productoDescripcion">Product description</label>
           <input
             type="text"
-            name="description"
-            id="description"
-            value={product.description}
+            name="productDescription"
+            id="productDescription"
+            value={product.productDescription}
             onChange={handleInputChange}
           />
         </div>
@@ -163,9 +162,9 @@ export const Products = () => {
             type="number"
             min={0}
             step={0.1}
-            name="price"
-            id="price"
-            value={product.price}
+            name="productPrice"
+            id="productPrice"
+            value={product.productPrice}
             onChange={handleInputChange}
           />
         </div>
@@ -173,35 +172,23 @@ export const Products = () => {
           <label htmlFor="productoImagen">Product image</label>
           <input
             type="file"
-            name="image"
-            id="image"
-            onChange={(e) => setImage(e.target.files[0])}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="productoImagen">Product stock</label>
-          <input
-            type="number"
-            min={0}
-            step={1}
-            name="stock"
-            id="stock"
-            value={product.stock}
-            onChange={handleInputChange}
+            name="productImage"
+            id="productImage"
+            onChange={handleFileChange}
           />
         </div>
         <div className="form-group">
           <label htmlFor="categoriaId">Product category</label>
           <select
-            name="category_id"
-            id="category_id"
-            value={product.category_id}
+            name="productCategory"
+            id="productCategory"
+            value={product.productCategory}
             onChange={handleInputChange}
           >
             <option value="">Elegir Categoria</option>
             {listOfCategories?.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
+              <option key={category._id} value={category._id}>
+                {category.nombre}
               </option>
             ))}
           </select>
