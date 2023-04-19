@@ -2,10 +2,13 @@ const express = require('express')
 const {config} = require('./config')
 const cors = require('cors')
 
+const fileUpload = require('express-fileupload')
+
 const app = express()
 
 //middlewares
 app.use(cors())
+app.use(fileUpload())
 app.use(express.json())
 
 //configuración de puerto

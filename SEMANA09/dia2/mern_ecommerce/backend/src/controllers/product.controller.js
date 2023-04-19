@@ -1,5 +1,6 @@
 const productController = {}
 
+const { uploadImage } = require('../libs/cloudinary.lib')
 const productModel = require('../models/product.model')
 
 
@@ -28,6 +29,34 @@ productController.getAll = async (req,res)=>{
         message:"products have been loaded",
         content:products
     })
+}
+
+productController.uploadProductImage = async(req,res)=>{
+    fileProductImage = req.files.productImage
+    //console.log(fileProductImage)
+    //uploadImage(productImage)
+
+    let uploadPath = '../backend/src/media/' + fileProductImage.name
+
+    await fileProductImage.mv(uploadPath,function(err){
+        if(err){
+            res.status(502).json({
+                success:false,
+                message:'upload image error',
+                content:err
+            })
+        }
+        else{
+            imagen_url = uploadImage(uploadPath)
+            console.log("imagen subida : ",imagen_url)
+            res.json({
+                success:true,
+                message:'image upload successfully',
+                content:imagen_url
+            })
+        }
+    })
+    
 }
 
 module.exports = productController

@@ -11,15 +11,11 @@ cloudinary.config({
   
   // Upload
   
-function uploadImage(uploadPath){
-    const res = cloudinary.uploader.upload(uploadPath, {public_id: "shop_g19_products"})
-    res.then((data) => {
-        console.log(data);
-        console.log(data.secure_url);
-        return data.secure_url
-    }).catch((err) => {
-        console.log(err);
-    });
+async function uploadImage(uploadPath){
+    await cloudinary.uploader.upload(uploadPath, (error,result)=>{
+        console.log(result.url)
+        return result.url
+    })
 }
 
 module.exports = {uploadImage}
