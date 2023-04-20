@@ -29,7 +29,8 @@ export const PublicLogin = ({
     e.preventDefault();
     const response = await signIn(userCredentials);
     if (response.status === 200) {
-      localStorage.setItem("token", response.data.access_token);
+      console.log('jwt : ',response.data.content)
+      localStorage.setItem("token", response.data.content);
       setAuthentication({
         ...authentication,
         isAuthenticated: true,

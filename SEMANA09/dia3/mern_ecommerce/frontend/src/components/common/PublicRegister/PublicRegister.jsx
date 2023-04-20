@@ -36,6 +36,7 @@ export const PublicRegister = ({
     });
     try {
       const response = await signUp(newUser);
+      console.log(response)
       if (response.success) {
         return setRegisterState({
           ...registerState,
