@@ -10,7 +10,7 @@ const ProductCard = ({ product }) => {
     return (
         <div className='Card'>
             <div className="Card-header">
-                <img className='Card-product-image' src={product.imagen} alt="" />
+                <img className='Card-product-image' src={product.productImage} alt="" />
                 <span className='Card-product-name'>Category</span>
                 <div className='Card-product-icon' onClick={()=>setLikedProduct(!likedProduct)}>
                     {
@@ -20,11 +20,11 @@ const ProductCard = ({ product }) => {
             </div>
             <div className="Card-body">
                 <div className='Card-product-description'>
-                    <h3>{product.nombre}</h3>
-                    <p>{product.nombre}</p>
+                    <h3>{product.productName}</h3>
+                    <p>{product.productName}</p>
                 </div>
                 <div className='Card-product-price'>
-                    <button className='Card-price-button'>${product.precio}</button>
+                    <button className='Card-price-button'>${product.productPrice}</button>
                 </div>
             </div>
         </div>

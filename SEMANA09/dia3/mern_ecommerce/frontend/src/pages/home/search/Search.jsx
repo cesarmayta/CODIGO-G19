@@ -1,7 +1,7 @@
 import { useEffect, useContext } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { AdminContext } from "../../../contexts/AdminContext";
-import { getAllProducts } from "../../../services/productsServices";
+import { getSearchAllProducts } from "../../../services/ProductsServices";
 import "./Search.scss";
 
 export const Search = () => {
@@ -11,9 +11,10 @@ export const Search = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    getAllProducts().then((response) => {
-      handleProductsList("products", response);
-      setProductsFiltered(response);
+    getSearchAllProducts().then((response) => {
+      console.log("products : ",response.data.content)
+      handleProductsList("products", response.data.content);
+      setProductsFiltered(response.data.content);
     });
   }, []);
 
@@ -98,7 +99,7 @@ export const Search = () => {
                 }`}
                 onClick={() => updateProductsList("novedades", 1)}
               >
-                Novedades
+                Polos
               </li>
               <li
                 className={`All-products-nav-content-item ${
@@ -106,7 +107,7 @@ export const Search = () => {
                 }`}
                 onClick={() => updateProductsList("destacados", 2)}
               >
-                Destacados
+                Poleras
               </li>
             </ul>
           </div>
