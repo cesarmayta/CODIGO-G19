@@ -1,5 +1,6 @@
 const userController = {}
 
+const {config} = require('../config')
 const bcrypt = require('bcryptjs')
 const userModel = require('../models/user.model')
 
@@ -50,7 +51,7 @@ userController.auth = async (req,res)=>{
             //generamos el token
             const token = jwt.sign({
                 userName:userAuth.userName
-            },'qwerty123',{ expiresIn : '1h'})
+            },config.jwt_secret,{ expiresIn : '1h'})
 
             res.status(200).json({
                 success:true,

@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const {config} = require('../config')
 
 function verifyToken(req,res,next){
     const bearerToken = req.headers['authorization']
@@ -10,7 +11,7 @@ function verifyToken(req,res,next){
         const token = bearer[1]
         console.log('jwt : ',token)
         try{
-            const decoded = jwt.verify(token,'qwerty123')
+            const decoded = jwt.verify(token,config.jwt_secret)
             console.log(decoded)
         }catch(err){
             return res.status(401).json({
