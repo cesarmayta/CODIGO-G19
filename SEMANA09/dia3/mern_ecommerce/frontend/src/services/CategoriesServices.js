@@ -1,11 +1,7 @@
 import { API_URL } from "@lib/Enviroments";
 
 export const getAllCategoriesService = async () => {
-  const response = await fetch(`${API_URL}/categories`, {
-    // headers: {
-    //   Authorization: "Bearer " + token,
-    // },
-  });
+  const response = await fetch(`${API_URL}/categories`);
   const status = response.status;
   const data = await response.json();
   return { data, status };

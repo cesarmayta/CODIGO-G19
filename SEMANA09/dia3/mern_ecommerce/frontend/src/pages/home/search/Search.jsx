@@ -1,7 +1,8 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext,useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { AdminContext } from "../../../contexts/AdminContext";
 import { getSearchAllProducts } from "../../../services/ProductsServices";
+import { getAllCategoriesService } from "../../../services/CategoriesServices";
 import "./Search.scss";
 
 export const Search = () => {
@@ -9,6 +10,7 @@ export const Search = () => {
     useContext(AdminContext);
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const [listOfCategories, setListOfCategories] = useState([]);
 
   useEffect(() => {
     getSearchAllProducts().then((response) => {
@@ -16,6 +18,16 @@ export const Search = () => {
       handleProductsList("products", response.data.content);
       setProductsFiltered(response.data.content);
     });
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getAllCategoriesService();
+      if (response.status === 200) {
+        setListOfCategories(response.data.content);
+      }
+    };
+    fetchData();
   }, []);
 
   const updateProductsList = (route, preferencia_id) => {
@@ -93,22 +105,11 @@ export const Search = () => {
               Categorias
             </h5>
             <ul className="All-products-nav-content">
-              <li
-                className={`All-products-nav-content-item ${
-                  isPathActive("/novedades") ? "active" : ""
-                }`}
-                onClick={() => updateProductsList("novedades", 1)}
-              >
-                Polos
-              </li>
-              <li
-                className={`All-products-nav-content-item ${
-                  isPathActive("/destacados") ? "active" : ""
-                }`}
-                onClick={() => updateProductsList("destacados", 2)}
-              >
-                Poleras
-              </li>
+              {listOfCategories?.map((category) => (
+                <li className={`All-products-nav-content-item ${isPathActive('/novedades') ? 'active' : ''}`}>
+                {category.nombre}
+                </li>
+              ))}
             </ul>
           </div>
           <div className="All-products-content">
