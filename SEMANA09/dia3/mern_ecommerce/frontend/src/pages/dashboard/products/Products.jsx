@@ -54,16 +54,17 @@ export const Products = () => {
       const token = getToken();
       const response = await postProduct(product);
       console.log(response.content);
-      // if (response) {
-      //   setBandera(!bandera);
-      //   setProduct({
-      //     productoNombre: "",
-      //     productoDescripcion: "",
-      //     productoPrecio: 0.0,
-      //     productoImagen: "",
-      //     categoriaId: 0,
-      //   });
-      // }
+      if (response.success) {
+        setBandera(!bandera);
+        setProduct({
+          productId:1,
+          productName:"",
+          productDescription:"",
+          productPrice:0.0,
+          productImage:"",
+          productCategory:""
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -82,13 +83,13 @@ export const Products = () => {
 
   const handleFileChange = async (event) => {
     const { name,value } = event.target;
-    console.log("nombre de imagen : ",value)
     const file = event.target.files[0];
     try {
-      //const response = await uploadProductImage(file);
-      //if (response.success) {
-      return setProduct({ ...product, [name]: value });
-      //}
+      const response = await uploadProductImage(file);
+      if (response.success) {
+        console.log(response.content)
+        return setProduct({ ...product, [name]: response.content });
+      }
     } catch (error) {
       return console.log(error);
     }

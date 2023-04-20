@@ -38,11 +38,8 @@ export const postProduct = async (product) => {
 export const uploadProductImage = async (image) => {
   let formData = new FormData();
   formData.append("productImage", image);
-  const response = await fetch(`${API_URL}/productos/productos/upload`, {
+  const response = await fetch(`${API_URL}/products/upload`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
     body: formData,
   });
   const data = await response.json();
