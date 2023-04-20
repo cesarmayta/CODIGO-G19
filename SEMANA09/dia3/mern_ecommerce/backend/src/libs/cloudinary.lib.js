@@ -12,9 +12,11 @@ cloudinary.config({
   // Upload
   
 async function uploadImage(uploadPath){
-    await cloudinary.uploader.upload(uploadPath, (error,result)=>{
-        console.log(result.url)
-        return result.url
+    return new Promise((res,rej)=>{
+        cloudinary.uploader.upload(uploadPath,(err,result)=>{
+            if(!err) res(result.secure_url)
+            else rej(err)
+        })
     })
 }
 

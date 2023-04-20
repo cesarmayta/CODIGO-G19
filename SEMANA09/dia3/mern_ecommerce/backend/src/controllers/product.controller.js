@@ -47,12 +47,14 @@ productController.uploadProductImage = async(req,res)=>{
             })
         }
         else{
-            imagen_url = uploadImage(uploadPath)
-            console.log("imagen subida : ",imagen_url)
-            res.json({
-                success:true,
-                message:'image upload successfully',
-                content:imagen_url
+            uploadImage(uploadPath)
+            .then((imagen_url)=>{
+                console.log("imagen subida : ",imagen_url)
+                res.json({
+                    success:true,
+                    message:'image upload successfully',
+                    content:imagen_url
+                })
             })
         }
     })
