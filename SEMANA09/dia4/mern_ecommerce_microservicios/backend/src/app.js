@@ -21,7 +21,4 @@ app.get('/',(req,res)=>{
     })
 })
 
-//routes
-app.use('/users',require('./routes/user.route'))
-
 module.exports = app

@@ -1,6 +1,7 @@
 const express = require('express')
 const {config} = require('../../config')
 const cors = require('cors')
+
 require('../../libs/mongoose.lib')
 
 const app = express()
@@ -15,6 +16,7 @@ app.get('/',(req,res)=>{
     })
 })
 
+app.use('/categories',require('../../routes/category.route'))
 app.use('/products',require('../../routes/product.route'))
 
 app.listen(config.mscatalogo.port,function(){
