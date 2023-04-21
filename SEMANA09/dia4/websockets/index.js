@@ -15,4 +15,11 @@ const io = SocketIO(server)
 
 io.on('connection',(socket)=>{
     console.log('nueva conexión con id',socket.id)
+    socket.on('mensajeCliente',(data)=>{
+        console.log('mensaje del cliente(',socket.id,') : ',data)
+        //io.emit('mensajeServidor',data)
+        data.id = socket.id
+        io.emit('mensajeServidor',data)
+        //socket.broadcast.emit('mensajeServidor',data)
+    })
 })
