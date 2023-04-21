@@ -8,7 +8,13 @@ const config = {
         api_key: process.env.CLOUDINARY_API_KEY,
         api_secret: process.env.CLOUDINARY_API_SECRET
     },
-    jwt_secret: process.env.JWT_SECRET || 'qwerty123'
+    jwt_secret: process.env.JWT_SECRET || 'qwerty123',
+    mscatalogo:{
+        port: process.env.MSCATALOGO_PORT || '5001'
+    },
+    msusuario : {
+        port : process.env.MSUSUARIOS_PORT || '5002'
+    }
 }
 
 module.exports = {config}
