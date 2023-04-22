@@ -2,3 +2,5 @@
 docker build -t img-api-shop-g19:1.0 .
 #para crear el contenedor
 docker run -d --name api-shop-g19 -p 5000:5000 img-api-shop-g19:1.0
+#para desplegar usando docker compose
+docker-compose up -d
