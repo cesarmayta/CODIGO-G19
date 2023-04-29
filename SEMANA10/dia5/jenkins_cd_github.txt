@@ -1,0 +1,11 @@
+despliegue continuo con github y jenkins
+
+1er paso  - habilitar docker para jenkins
+
+grep docker /etc/group
+sudo usermod -a -G docker jenkins
+sudo service jenkins restart
+
+2do paso - crear tarea en jenkins
+
+3er paso crear webhook en github
