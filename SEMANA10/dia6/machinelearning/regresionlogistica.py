@@ -24,7 +24,7 @@ if __name__ == "__main__":
     #normalizando nuestro dataframe
     df_features = StandardScaler().fit_transform(df_features)
     
-    #ENTRENAMIENTO DEL MODELO
+    #DIVISION DE DATA
     x_train,x_test,y_train,y_test = train_test_split(df_features,df_target,
                                                      test_size=0.3,
                                                      random_state=42)
