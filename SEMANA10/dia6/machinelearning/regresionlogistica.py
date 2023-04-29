@@ -36,5 +36,24 @@ if __name__ == "__main__":
     pca = PCA(n_components=3)
     pca.fit(x_train)
     
-    plt.plot(pca.explained_variance_)
-    plt.show()
+    #aplicando modelos de regresión logistica
+    from sklearn.linear_model import LogisticRegression
+    import numpy as np
+    
+    logistic = LogisticRegression(solver='lbfgs')
+    #configurar datos de entrenamiento
+    df_train = pca.transform(x_train)
+    df_test = pca.transform(x_test)
+    #entrenamos el modelo
+    logistic.fit(df_train,y_train)
+    print('Score/Accuracy PCA:',logistic.score(df_test,y_test))
+    
+    #predicción
+    x_new = np.array([54,1,0])
+    prediccion = logistic.predict(x_new.reshape(1,-1))
+    print("una persona con 54 años sexo masculino :")
+    if(prediccion == 1):
+        print("puede sufrir ataca al corazón")
+    else:
+        print("no sufriria ataque el corazón")
+    
