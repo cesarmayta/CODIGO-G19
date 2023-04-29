@@ -8,4 +8,10 @@ sudo service jenkins restart
 
 2do paso - crear tarea en jenkins
 
+- github webhook
+
+http://ip_publica:8080/github-webhook/
+
+aplication json
+
 3er paso crear webhook en github
