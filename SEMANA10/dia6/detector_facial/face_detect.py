@@ -18,3 +18,5 @@ while True:
     
     if k == 27:
         break
+    
+cap.release()
