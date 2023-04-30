@@ -29,4 +29,4 @@ docker exec -it edshop.web python3 manage.py collectstatic
 #para ingresar al terminal de un contenedor
 docker exec -it edshop.web sh
 
-docker-machine create -d digitalocean --digitalocean-image=ubuntu-20-04-x64 --digitalocean-access-token=dop_v1_2ac049bc47000a90d9c14a6869be285c50de8f9c4da70e3e5ad52c12ee7abdc6 api-pos
+docker-machine create -d digitalocean
